@@ -9,14 +9,25 @@ import Timetable from "./Timetable";
 import Material from "./Material";
 import Profile from "./Profile";
 import Exam from "../Exam";
+import LostFound from "../LostFound";
+import Societies from "../Societies";
+import UpcomingEvents from "./UpcomingEvents";
 import ViewMarks from "./ViewMarks";
+import Attendance from "./Attendance";
 import { useNavigate, useLocation } from "react-router-dom";
+import Chatbot from "../../components/Chatbot";
 
 const MENU_ITEMS = [
   { id: "home", label: "Home", component: null },
+  { id: "attendance", label: "Attendance", component: Attendance },
+  { id: "lostfound", label: "Lost & Found", component: LostFound },
+  // As requested: after Lost & Found show Notice, then Societies, then Upcoming Events
+  { id: "notice", label: "Notice", component: Notice },
+  { id: "societies", label: "Societies", component: Societies },
+  { id: "events", label: "Upcoming Events", component: UpcomingEvents },
+  // Remaining items follow
   { id: "timetable", label: "Timetable", component: Timetable },
   { id: "material", label: "Material", component: Material },
-  { id: "notice", label: "Notice", component: Notice },
   { id: "exam", label: "Exam", component: Exam },
   { id: "marks", label: "Marks", component: ViewMarks },
 ];
@@ -26,7 +37,7 @@ const Home = () => {
   const [profileData, setProfileData] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -64,8 +75,8 @@ const Home = () => {
     const isSelected = selectedMenu.toLowerCase() === menuId.toLowerCase();
     return `
       text-center px-6 py-3 cursor-pointer
-      font-medium text-sm w-full
-      rounded-md
+      font-medium text-sm
+      rounded-md shrink-0 min-w-[160px]
       transition-all duration-300 ease-in-out
       ${
         isSelected
@@ -87,7 +98,7 @@ const Home = () => {
     }
 
     const MenuItem = MENU_ITEMS.find(
-      (item) => item.label.toLowerCase() === selectedMenu.toLowerCase()
+      (item) => item.id.toLowerCase() === selectedMenu.toLowerCase()
     )?.component;
 
     return MenuItem && <MenuItem />;
@@ -109,7 +120,7 @@ const Home = () => {
     <>
       <Navbar />
       <div className="max-w-7xl mx-auto">
-        <ul className="flex justify-evenly items-center gap-10 w-full mx-auto my-8">
+        <ul className="flex flex-nowrap items-center gap-4 w-full mx-auto my-8 overflow-x-auto px-4 pb-2">
           {MENU_ITEMS.map((item) => (
             <li
               key={item.id}
@@ -124,6 +135,7 @@ const Home = () => {
         {renderContent()}
       </div>
       <Toaster position="bottom-center" />
+      <Chatbot />
     </>
   );
 };

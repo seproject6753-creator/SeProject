@@ -50,7 +50,7 @@ const Material = () => {
       const response = await axiosWrapper.get("/subject", {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
         },
       });
       if (response.data.success) {
@@ -75,7 +75,7 @@ const Material = () => {
       const response = await axiosWrapper.get("/branch", {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
         },
       });
       if (response.data.success) {
@@ -105,7 +105,7 @@ const Material = () => {
       const response = await axiosWrapper.get(`/material?${queryParams}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
         },
       });
       if (response.data.success) {
@@ -182,7 +182,7 @@ const Material = () => {
         await axiosWrapper.post("/material", formDataToSend, {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
           },
         });
         toast.success("Material added successfully");
@@ -216,7 +216,7 @@ const Material = () => {
       await axiosWrapper.delete(`/material/${selectedMaterialId}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
         },
       });
       toast.success("Material deleted successfully");

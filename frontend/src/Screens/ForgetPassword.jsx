@@ -30,13 +30,13 @@ const UserTypeSelector = ({ selected, onSelect }) => (
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
-  const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
   const [selected, setSelected] = useState(USER_TYPES.STUDENT);
   const [email, setEmail] = useState("");
 
   useEffect(() => {
     if (userToken) {
-      navigate(`/${localStorage.getItem("userType")}`);
+  navigate(`/${sessionStorage.getItem("userType")}`);
     }
   }, [userToken, navigate]);
 

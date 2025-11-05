@@ -17,7 +17,7 @@ const StudentFinder = () => {
   const [dataLoading, setDataLoading] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
   const [hasSearched, setHasSearched] = useState(false);
 
   useEffect(() => {

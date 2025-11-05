@@ -31,7 +31,7 @@ const Branch = () => {
       const response = await axiosWrapper.get(`/branch`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
         },
       });
       if (response.data.success) {
@@ -51,7 +51,8 @@ const Branch = () => {
     }
   };
 
-  const addBranchHandler = async () => {
+  const addBranchHandler = async (e) => {
+    e?.preventDefault();
     if (!data.name || !data.branchId) {
       toast.dismiss();
       toast.error("Please fill all the fields");
@@ -61,7 +62,7 @@ const Branch = () => {
       toast.loading(isEditing ? "Updating Branch" : "Adding Branch");
       const headers = {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+  Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       };
       let response;
       if (isEditing) {
@@ -90,7 +91,8 @@ const Branch = () => {
       }
     } catch (error) {
       toast.dismiss();
-      toast.error(error.response.data.message);
+      const msg = error?.response?.data?.message || error?.message || "Error adding/updating branch";
+      toast.error(msg);
     }
   };
 
@@ -114,7 +116,7 @@ const Branch = () => {
       toast.loading("Deleting Branch");
       const headers = {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+  Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       };
       const response = await axiosWrapper.delete(
         `/branch/${selectedBranchId}`,
@@ -132,7 +134,8 @@ const Branch = () => {
       }
     } catch (error) {
       toast.dismiss();
-      toast.error(error.response.data.message);
+      const msg = error?.response?.data?.message || error?.message || "Error deleting branch";
+      toast.error(msg);
     }
   };
 
@@ -216,7 +219,7 @@ const Branch = () => {
                 >
                   Cancel
                 </CustomButton>
-                <CustomButton variant="primary" onClick={addBranchHandler}>
+                <CustomButton variant="primary" type="submit">
                   {isEditing ? "Update" : "Add"}
                 </CustomButton>
               </div>

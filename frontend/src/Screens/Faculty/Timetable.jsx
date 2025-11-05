@@ -95,7 +95,7 @@ const AddTimetableModal = ({
             <label className="block mb-2">Timetable File</label>
             <input
               type="file"
-              accept="image/*"
+              accept="image/*,application/pdf"
               onChange={handleFileChange}
               className="w-full"
             />
@@ -103,11 +103,15 @@ const AddTimetableModal = ({
 
           {formData.previewUrl && (
             <div className="mt-4">
-              <img
-                src={formData.previewUrl}
-                alt="Preview"
-                className="max-w-full h-auto"
-              />
+              {formData.file && formData.file.type === "application/pdf" ? (
+                <div className="text-sm text-gray-600">PDF selected: {formData.file.name}</div>
+              ) : (
+                <img
+                  src={formData.previewUrl}
+                  alt="Preview"
+                  className="max-w-full h-auto"
+                />
+              )}
             </div>
           )}
 
@@ -132,7 +136,7 @@ const Timetable = () => {
   const [selectedTimetableId, setSelectedTimetableId] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingTimetable, setEditingTimetable] = useState(null);
-  const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
 
   useEffect(() => {
     getBranchHandler();

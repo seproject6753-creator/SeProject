@@ -123,8 +123,8 @@ const Login = () => {
       );
 
       const { token } = response.data.data;
-      localStorage.setItem("userToken", token);
-      localStorage.setItem("userType", selected);
+  sessionStorage.setItem("userToken", token);
+  sessionStorage.setItem("userType", selected);
       dispatch(setUserToken(token));
       navigate(`/${selected.toLowerCase()}`);
     } catch (error) {
@@ -135,9 +135,9 @@ const Login = () => {
   };
 
   useEffect(() => {
-    const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
     if (userToken) {
-      navigate(`/${localStorage.getItem("userType").toLowerCase()}`);
+  navigate(`/${sessionStorage.getItem("userType").toLowerCase()}`);
     }
   }, [navigate]);
 

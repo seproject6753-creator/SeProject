@@ -33,7 +33,7 @@ const Material = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
           },
         }
       );
@@ -65,7 +65,7 @@ const Material = () => {
       const response = await axiosWrapper.get(`/material?${queryParams}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
         },
       });
       if (response.data.success) {

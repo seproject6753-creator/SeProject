@@ -9,8 +9,8 @@ const UpdatePasswordLoggedIn = ({ onClose }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const userToken = localStorage.getItem("userToken");
-  const userType = localStorage.getItem("userType");
+  const userToken = sessionStorage.getItem("userToken");
+  const userType = sessionStorage.getItem("userType");
 
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();

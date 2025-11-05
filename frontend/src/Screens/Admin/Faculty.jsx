@@ -42,7 +42,7 @@ const Faculty = () => {
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const [selectedFacultyId, setSelectedFacultyId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
   const [file, setFile] = useState(null);
   const [dataLoading, setDataLoading] = useState(null);
 

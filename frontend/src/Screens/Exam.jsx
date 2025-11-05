@@ -27,7 +27,7 @@ const Exam = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [file, setFile] = useState(null);
   const userData = useSelector((state) => state.userData);
-  const loginType = localStorage.getItem("userType");
+  const loginType = sessionStorage.getItem("userType");
   const [processLoading, setProcessLoading] = useState(false);
   const [dataLoading, setDataLoading] = useState(false);
 
@@ -45,7 +45,7 @@ const Exam = () => {
       const response = await axiosWrapper.get(link, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
         },
       });
       if (response.data.success) {
@@ -86,7 +86,7 @@ const Exam = () => {
       toast.loading(isEditing ? "Updating Exam" : "Adding Exam");
       const headers = {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+  Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       };
       let response;
       const formData = new FormData();
@@ -164,7 +164,7 @@ const Exam = () => {
       toast.loading("Deleting Exam");
       const headers = {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+  Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       };
       const response = await axiosWrapper.delete(`/exam/${selectedExamId}`, {
         headers: headers,

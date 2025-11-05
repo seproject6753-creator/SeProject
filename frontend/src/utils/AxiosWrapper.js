@@ -12,7 +12,7 @@ axiosWrapper.interceptors.response.use(
       error.response?.data?.success === false &&
       error.response?.data?.data === null
     ) {
-      localStorage.clear();
+      sessionStorage.clear();
       window.location.href = "/";
     }
     return Promise.reject(error);

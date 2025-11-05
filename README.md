@@ -108,6 +108,54 @@ npm run dev
 npm start
 ```
 
+## AI Chatbot (Gemini + local knowledge)
+
+The app includes a Gemini-powered chatbot, grounded by your local college FAQs. You control the knowledge; Gemini answers in natural language.
+
+### Setup
+
+1. Get an API key from Google AI Studio (Gemini).
+2. In `backend/.env` add:
+
+```env
+GOOGLE_GEMINI_API_KEY=your_api_key_here
+GEMINI_MODEL=gemini-1.5-flash
+```
+
+3. Install backend dependencies and start the server:
+
+```bash
+npm install
+npm run dev
+```
+
+### Train/ground the chatbot with your info
+
+Edit `backend/knowledgebase/college-faq.json` and add your FAQs:
+
+```json
+[
+	{
+		"question": "How do I get my ID card?",
+		"answer": "Collect it from the admin office within 7 days of admission.",
+		"tags": ["id", "card"],
+		"category": "admissions"
+	}
+]
+```
+
+The backend automatically includes this context in prompts so Gemini answers with your college’s policies first. Restart the backend if you change this file.
+
+### API
+
+- `POST /api/gemini/ask` with body `{ "question": "<your question>", "includeKB": true }` responds with `{ answer }`.
+
+### Notes
+
+- Keep sensitive data out of prompts. The API key is stored on the server and never exposed to the client.
+- For larger documents, we can extend this to support file uploads or vector search (RAG) later.
+
+
 ## Initial Setup
 
 1. Create an admin account using the seeder:

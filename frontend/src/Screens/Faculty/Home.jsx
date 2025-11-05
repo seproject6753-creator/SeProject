@@ -10,7 +10,10 @@ import Material from "./Material";
 import StudentFinder from "./StudentFinder";
 import Profile from "./Profile";
 import Marks from "./AddMarks";
+import Attendance from "./Attendance";
 import Exam from "../Exam";
+import LostFound from "../LostFound";
+import Societies from "../Societies";
 
 const MENU_ITEMS = [
   { id: "home", label: "Home", component: null },
@@ -20,13 +23,16 @@ const MENU_ITEMS = [
   { id: "student info", label: "Student Info", component: StudentFinder },
   { id: "marks", label: "Marks", component: Marks },
   { id: "exam", label: "Exam", component: Exam },
+  { id: "attendance", label: "Attendance", component: Attendance },
+  { id: "lostfound", label: "Lost & Found", component: LostFound },
+  { id: "societies", label: "Societies", component: Societies },
 ];
 
 const Home = () => {
   const [selectedMenu, setSelectedMenu] = useState("Home");
   const [profileData, setProfileData] = useState(null);
   const dispatch = useDispatch();
-  const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
 
   useEffect(() => {
     const fetchUserDetails = async () => {

@@ -19,7 +19,7 @@ const Timetable = () => {
           `/timetable?semester=${userData.semester}&branch=${userData.branchId?._id}`,
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+              Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
             },
           }
         );
@@ -64,11 +64,26 @@ const Timetable = () => {
       </div>
       {dataLoading && <Loading />}
       {!dataLoading && timetable && (
-        <img
-          className="mt-8 rounded-lg shadow-md w-[70%] mx-auto"
-          src={process.env.REACT_APP_MEDIA_LINK + "/" + timetable}
-          alt="timetable"
-        />
+        timetable.toLowerCase().endsWith(".pdf") ? (
+          <div className="mt-8 w-full flex justify-center">
+            <object
+              data={`${process.env.REACT_APP_MEDIA_LINK + "/" + timetable}#toolbar=1`}
+              type="application/pdf"
+              width="70%"
+              height="700px"
+            >
+              <p>
+                Your browser can't display this PDF. You can download it instead.
+              </p>
+            </object>
+          </div>
+        ) : (
+          <img
+            className="mt-8 rounded-lg shadow-md w-[70%] mx-auto"
+            src={process.env.REACT_APP_MEDIA_LINK + "/" + timetable}
+            alt="timetable"
+          />
+        )
       )}
       {!dataLoading && !timetable && (
         <p className="mt-10">No Timetable Available At The Moment!</p>

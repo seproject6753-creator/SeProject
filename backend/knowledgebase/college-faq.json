@@ -1,0 +1,128 @@
+[
+  {
+    "question": "What are the college office hours?",
+    "answer": "Office hours are Monday–Saturday, 9:00 AM – 5:30 PM (closed on Sundays and public holidays). Lunch break 1:00 – 1:30 PM.",
+    "tags": ["office", "hours", "timings", "admin office"],
+    "category": "general"
+  },
+  {
+    "question": "How can I contact the Admissions Helpdesk?",
+    "answer": "Email: admissions@college.edu, Phone: +91 90000 00001. Desk Location: AAA Building, Room 102. Working hours: 10:00 AM – 5:00 PM (Mon–Fri).",
+    "tags": ["admissions", "contact", "helpdesk", "AAA building"],
+    "category": "admissions"
+  },
+  {
+    "question": "How do I get or reissue my ID card?",
+    "answer": "New ID cards are issued 1 week after joining. Lost cards can be reissued at the AAA section; reissue fee is ₹1000.",
+    "tags": ["id", "card", "reissue", "AAA"],
+    "category": "student-services"
+  },
+  {
+    "question": "How do I pay fees?",
+    "answer": "All fee payments are made on the college ERP. All common payment modes are accepted.",
+    "tags": ["fees", "erp", "payment", "modes"],
+    "category": "fees"
+  },
+  {
+    "question": "Where are fee deadlines shown and are there fines?",
+    "answer": "Fee deadlines are displayed in the ERP. Late payments may attract fines as per ERP notifications.",
+    "tags": ["fees", "deadline", "fine", "erp"],
+    "category": "fees"
+  },
+  {
+    "question": "Where can students see the timetable?",
+    "answer": "Open Student > Timetable in the portal to view and download your timetable. Faculty can upload/update from Faculty > Timetable.",
+    "tags": ["timetable", "schedule", "student", "faculty"],
+    "category": "academics"
+  },
+  {
+    "question": "What is the minimum attendance requirement?",
+    "answer": "A minimum of 75% attendance is required in each subject.",
+    "tags": ["attendance", "minimum", "policy", "75%"],
+    "category": "academics"
+  },
+  {
+    "question": "Where are study materials uploaded and how do I access them?",
+    "answer": "Faculty upload materials under Faculty > Material. Students can access them under Student > Material, filtered by subject/branch/semester.",
+    "tags": ["materials", "notes", "faculty upload", "student access"],
+    "category": "academics"
+  },
+  {
+    "question": "How are exam schedules announced?",
+    "answer": "Exam schedules are shared via prior emails and announced in the app (Exam section and Notices).",
+    "tags": ["exam", "schedule", "notice", "email"],
+    "category": "exams"
+  },
+  {
+    "question": "What is the marks/assessment structure?",
+    "answer": "Mid Term: 25 marks, End Term: 40 marks, Internals: 35 marks (total 100).",
+    "tags": ["marks", "assessment", "midterm", "internal", "endterm"],
+    "category": "exams"
+  },
+  {
+    "question": "Where can students see their marks?",
+    "answer": "Marks are visible on the ERP and within the app under Student > Marks.",
+    "tags": ["marks", "results", "erp", "app"],
+    "category": "exams"
+  },
+  {
+    "question": "How to join a society?",
+    "answer": "First-year students are selected through interviews. In second year, students can volunteer to become members. Each society has one head (shown in the app), with heads/coordinators managing members.",
+    "tags": ["society", "clubs", "membership", "interview", "volunteer"],
+    "category": "societies"
+  },
+  {
+    "question": "Who can schedule society events?",
+    "answer": "Only society Heads and Coordinators can schedule events. Announcements appear in the app under society pages and Upcoming Events.",
+    "tags": ["society", "events", "head", "coordinator", "schedule"],
+    "category": "societies"
+  },
+  {
+    "question": "How do I report or claim Lost & Found items?",
+    "answer": "Use the Lost & Found page in the app to report or claim items. Alternatively, email lostfound@college.edu.",
+    "tags": ["lost", "found", "claim", "report"],
+    "category": "student-services"
+  },
+  {
+    "question": "Who do I contact for IT/portal issues?",
+    "answer": "IT Helpdesk: support@college.edu, Phone: +91 90000 00002. Location: CS Block, Lab 101. Hours: 10:00 AM – 6:00 PM (Mon–Fri).",
+    "tags": ["it", "support", "helpdesk", "portal"],
+    "category": "support"
+  },
+  {
+    "question": "Whom to contact for academic/branch matters?",
+    "answer": "For quick guidance, reach out to class seniors. For official concerns, contact your Department HOD (e.g., cse-hod@college.edu).",
+    "tags": ["academics", "hod", "department", "seniors"],
+    "category": "academics"
+  },
+  {
+    "question": "What are the library timings and borrowing limits?",
+    "answer": "Library is open from 6:00 AM to 12:00 AM. Borrowing limit: 4 books per student. No borrowing fee.",
+    "tags": ["library", "timings", "books", "borrow", "fees"],
+    "category": "facilities"
+  },
+  {
+    "question": "How do I contact the Hostel Office and what is the process?",
+    "answer": "Hostel Office: hostel@college.edu, Phone: +91 90000 00003. Office hours: 10:00 AM – 6:00 PM. Apply via ERP Hostel module and submit documents at the Hostel Office.",
+    "tags": ["hostel", "accommodation", "contact", "process"],
+    "category": "hostel"
+  },
+  {
+    "question": "How to contact the Placement Cell and where are updates posted?",
+    "answer": "Placement Cell: placements@college.edu, Phone: +91 90000 00004. Updates are posted on the app Notices and the Placement Telegram channel.",
+    "tags": ["placements", "contact", "updates", "telegram"],
+    "category": "placements"
+  },
+  {
+    "question": "What is the minimum CGPA criteria for placements?",
+    "answer": "Minimum CGPA 6.5 with no active backlogs is required to sit for most drives. Example: A-tier companies may require 7.0+, B-tier 6.5+.",
+    "tags": ["cgpa", "eligibility", "placements", "backlogs"],
+    "category": "placements"
+  },
+  {
+    "question": "Are there any dress code rules and mobile phone policies?",
+    "answer": "No formal dress code. Mobile phones are not allowed in laboratories.",
+    "tags": ["dress code", "mobile", "labs", "policy"],
+    "category": "policy"
+  }
+]

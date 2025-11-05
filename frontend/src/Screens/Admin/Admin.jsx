@@ -37,7 +37,7 @@ const Admin = () => {
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const [selectedAdminId, setSelectedAdminId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
   const [file, setFile] = useState(null);
   const [dataLoading, setDataLoading] = useState(false);
 

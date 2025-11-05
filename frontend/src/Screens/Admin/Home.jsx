@@ -32,7 +32,7 @@ const Home = () => {
   const [profileData, setProfileData] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
 
   const fetchUserDetails = async () => {
     setIsLoading(true);

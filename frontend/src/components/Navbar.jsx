@@ -8,8 +8,8 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const logouthandler = () => {
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("userType");
+    sessionStorage.removeItem("userToken");
+    sessionStorage.removeItem("userType");
     navigate("/");
   };
 

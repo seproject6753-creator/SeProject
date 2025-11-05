@@ -11,7 +11,7 @@ const ViewMarks = () => {
     userData?.semester || 1
   );
   const [marks, setMarks] = useState([]);
-  const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
 
   const fetchMarks = async (semester) => {
     setDataLoading(true);

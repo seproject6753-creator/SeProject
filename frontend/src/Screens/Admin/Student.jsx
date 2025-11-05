@@ -25,7 +25,7 @@ const Student = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [file, setFile] = useState(null);
   const [hasSearched, setHasSearched] = useState(false);
-  const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -53,7 +53,35 @@ const Student = () => {
 
   useEffect(() => {
     getBranchHandler();
+    fetchAllStudents();
   }, []);
+
+  const fetchAllStudents = async () => {
+    try {
+      setDataLoading(true);
+      const response = await axiosWrapper.get(`/student`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      if (response.data.success) {
+        setStudents(response.data.data || []);
+        setHasSearched(true);
+      } else {
+        setStudents([]);
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      if (error.response?.status === 404) {
+        setStudents([]);
+      } else {
+        console.error(error);
+        toast.error(error.response?.data?.message || "Error fetching students");
+      }
+    } finally {
+      setDataLoading(false);
+    }
+  };
 
   const getBranchHandler = async () => {
     try {
@@ -97,7 +125,8 @@ const Student = () => {
       !searchParams.semester &&
       !searchParams.branch
     ) {
-      toast.error("Please select at least one filter");
+      // If no filters selected, show all students
+      await fetchAllStudents();
       return;
     }
 
@@ -205,6 +234,8 @@ const Student = () => {
           toast.success(response.data.message);
         }
         resetForm();
+        // refresh list to include new/updated student
+        fetchAllStudents();
       } else {
         toast.error(response.data.message);
       }
@@ -265,7 +296,7 @@ const Student = () => {
       if (response.data.success) {
         toast.success("Student has been deleted successfully");
         setIsDeleteConfirmOpen(false);
-        searchStudents({ preventDefault: () => {} });
+        fetchAllStudents();
       } else {
         toast.error(response.data.message);
       }

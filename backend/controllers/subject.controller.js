@@ -7,7 +7,7 @@ const getSubjectController = async (req, res) => {
     let query = {};
     if (branch) query.branch = branch;
     if (semester) query.semester = semester;
-    let subjects = await Subject.find(query).populate("branch");
+  let subjects = await Subject.find(query).populate("branch").populate("facultyId");
     if (!subjects || subjects.length === 0) {
       return ApiResponse.error("No Subjects Found", 404).send(res);
     }

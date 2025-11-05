@@ -19,7 +19,7 @@ const Notice = () => {
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const [selectedNoticeId, setSelectedNoticeId] = useState(null);
   const [dataLoading, setDataLoading] = useState(false);
-  const token = localStorage.getItem("userToken");
+  const token = sessionStorage.getItem("userToken");
 
   const [formData, setFormData] = useState({
     title: "",

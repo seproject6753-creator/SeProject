@@ -24,7 +24,7 @@ const Subject = () => {
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const [selectedSubjectId, setSelectedSubjectId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const userToken = localStorage.getItem("userToken");
+  const userToken = sessionStorage.getItem("userToken");
   const [dataLoading, setDataLoading] = useState(false);
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const Subject = () => {
       toast.loading(isEditing ? "Updating Subject" : "Adding Subject");
       const headers = {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+  Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       };
       let response;
       if (isEditing) {
@@ -166,7 +166,7 @@ const Subject = () => {
       toast.loading("Deleting Subject");
       const headers = {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+  Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       };
       const response = await axiosWrapper.delete(
         `/subject/${selectedSubjectId}`,

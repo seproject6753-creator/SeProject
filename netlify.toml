@@ -2,9 +2,9 @@
 # Docs: https://docs.netlify.com/configure-builds/file-based-configuration/
 
 [build]
-  base = "frontend"
-  command = "npm run build"
-  publish = "build"
+  # Build from repo root but execute npm in the frontend subfolder
+  command = "npm --prefix frontend ci && npm --prefix frontend run build"
+  publish = "frontend/build"
 
 [build.environment]
   # Ensure a modern Node version compatible with react-scripts 5

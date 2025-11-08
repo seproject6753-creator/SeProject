@@ -1,14 +1,25 @@
-## Netlify configuration for the React frontend inside the frontend/ folder
+## Netlify build configuration for the React frontend
+## Docs: https://docs.netlify.com/configure-builds/file-based-configuration/
 
 [build]
-	base = "frontend"            # run all commands from the frontend folder
-	publish = "frontend/build"    # output directory after build
+	# Run from the frontend directory and build there
+	base = "frontend"
 	command = "npm ci && npm run build"
+	# When base is set, publish is relative to base
+	publish = "build"
 
 [build.environment]
+	# Ensure a modern Node for CRA 5
 	NODE_VERSION = "18"
+	# Extra heap to avoid OOM on larger builds
+	NODE_OPTIONS = "--max_old_space_size=4096"
+	# Prevent CRA from failing the build on warnings in CI
+	CI = "false"
+	# Set these in Netlify UI (recommended) or uncomment and commit to hardcode
+	# REACT_APP_APILINK = "https://<your-render-app>.onrender.com/api"
+	# REACT_APP_MEDIA_LINK = "https://<your-render-app>.onrender.com/media"
 
-## Single Page App fallback so React Router works on refresh/deep links
+## SPA fallback so React Router deep links work on refresh
 [[redirects]]
 	from = "/*"
 	to = "/index.html"

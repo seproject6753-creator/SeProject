@@ -64,7 +64,13 @@ const Attendance = () => {
     loadSubjectWise();
   }, []);
 
-  const mediaBase = process.env.REACT_APP_MEDIA_LINK || "http://localhost:4100/media";
+  // Resolve media base. Prefer env var; otherwise, in production use relative '/media'
+  // (works if Netlify proxy is configured). Fallback to localhost for dev.
+  const mediaBase =
+    process.env.REACT_APP_MEDIA_LINK ||
+    (typeof window !== "undefined" && window.location.hostname !== "localhost"
+      ? "/media"
+  : "http://localhost:4000/media"); // dev-only fallback
 
   return (
     <div className="px-4 py-6 md:p-8">

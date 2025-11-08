@@ -27,3 +27,16 @@
 	to = "/index.html"
 	status = 200
 
+## Proxy API and media calls to Render backend
+[[redirects]]
+	from = "/api/*"
+	to = "https://seproject-1-skjz.onrender.com/api/:splat"
+	status = 200
+	force = true
+
+[[redirects]]
+	from = "/media/*"
+	to = "https://seproject-1-skjz.onrender.com/media/:splat"
+	status = 200
+	force = true
+

@@ -40,3 +40,10 @@
 	status = 200
 	force = true
 
+## Special auth route to avoid ad blockers on '/login'
+[[redirects]]
+	from = "/xapi/:role/auth"
+	to = "https://seproject-1-skjz.onrender.com/api/:role/login"
+	status = 200
+	force = true
+

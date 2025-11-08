@@ -117,13 +117,21 @@ const Login = () => {
     }
 
     try {
-      const response = await axiosWrapper.post(
-        `/${selected.toLowerCase()}/login`,
-        formData,
-        {
+      const role = selected.toLowerCase();
+      const isProd = typeof window !== "undefined" && window.location.hostname !== "localhost";
+      let response;
+
+      if (isProd) {
+        // Use same-origin, adblock-safe proxy path; Netlify rewrites to Render login
+        response = await axios.post(`/xapi/${role}/auth`, formData, {
           headers: { "Content-Type": "application/json" },
-        }
-      );
+        });
+      } else {
+        // Dev: call backend directly through axiosWrapper baseURL
+        response = await axiosWrapper.post(`/${role}/login`, formData, {
+          headers: { "Content-Type": "application/json" },
+        });
+      }
 
       const { token } = response.data.data;
   sessionStorage.setItem("userToken", token);

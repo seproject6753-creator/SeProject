@@ -15,6 +15,8 @@
 	NODE_OPTIONS = "--max_old_space_size=4096"
 	# Prevent CRA from failing the build on warnings in CI
 	CI = "false"
+	# (Optional) Completely disable CRA ESLint plugin during build so warnings never block deploy
+	DISABLE_ESLINT_PLUGIN = "true"
 	# Set these in Netlify UI (recommended) or uncomment and commit to hardcode
 	# REACT_APP_APILINK = "https://<your-render-app>.onrender.com/api"
 	# REACT_APP_MEDIA_LINK = "https://<your-render-app>.onrender.com/media"

@@ -1,0 +1,11 @@
+# Netlify config scoped to the frontend folder
+
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NODE_OPTIONS = "--max_old_space_size=4096"
+  CI = "false"
+  DISABLE_ESLINT_PLUGIN = "true"

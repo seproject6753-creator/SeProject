@@ -108,6 +108,68 @@ npm run dev
 npm start
 ```
 
+## Deployment (Render + Netlify)
+
+This project deploys cleanly to a Render Web Service (backend) and Netlify Site (frontend). Follow these steps to avoid common CORS / env mistakes:
+
+### 1. Backend on Render
+
+1. In the Render dashboard choose: New + Web Service.
+2. Point it to the `backend/` folder (or set Root Directory to `backend`).
+3. Build Command: (leave blank – no build needed) or `npm install` if Render requests one.
+4. Start Command: `node index.js` (Render will inject `PORT`).
+5. Add Environment Variables:
+	- `MONGODB_URI` = your MongoDB Atlas connection string.
+	- `FRONTEND_API_LINK` = Netlify URL (e.g. `https://your-site.netlify.app`).
+	- `JWT_SECRET` = a strong secret.
+	- `GOOGLE_GEMINI_API_KEY` = (optional) if using Gemini chatbot.
+	- `GEMINI_MODEL` = (optional) e.g. `gemini-1.5-flash`.
+	- `NODEMAILER_EMAIL` / `NODEMAILER_PASS` (only if email features needed).
+6. Enable Auto Deploy on main branch.
+7. After first deploy note the Render URL: e.g. `https://cms-backend.onrender.com`.
+
+### 2. Frontend on Netlify
+
+1. Create a new Netlify site from Git, root directory `frontend/`.
+2. Build Command: `npm run build`
+3. Publish Directory: `build`
+4. Environment Variables (Netlify UI > Site settings > Environment):
+	- `REACT_APP_APILINK` = `https://cms-backend.onrender.com/api`
+	- `REACT_APP_MEDIA_LINK` = `https://cms-backend.onrender.com/media`
+5. Trigger a deploy; Netlify injects these at build time.
+
+### 3. CORS Verification
+
+The backend allows `FRONTEND_API_LINK` plus localhost. Ensure `FRONTEND_API_LINK` exactly matches the Netlify URL (protocol + host). If you later enable a custom domain, update this variable and redeploy the backend.
+
+### 4. Smoke Test Post-Deploy
+
+1. Visit Netlify site and log in with seeded admin (if seeded).
+2. Open DevTools Network – confirm API requests go to Render and return 200.
+3. Load a media asset (profile image/material) – URL should begin with Render base and respond 200.
+4. Use the chatbot (if Gemini key set) – response should appear; if 500 check Gemini env vars.
+5. Optional: Create an attendance session (faculty) and verify QR loads.
+
+### 5. Common Pitfalls
+
+| Issue | Fix |
+|-------|-----|
+| 404 on media | Ensure `REACT_APP_MEDIA_LINK` points to Render base + `/media` |
+| CORS blocked | FRONTEND_API_LINK mismatch; update in Render env vars and redeploy |
+| Chatbot 500 | Missing `GOOGLE_GEMINI_API_KEY` or invalid model name |
+| Images broken | File actually not uploaded to `backend/media`; confirm path & case |
+| Wrong API base (4100) | Fallback now corrected to 4000; set `REACT_APP_APILINK` in Netlify |
+
+### 6. Optional Hardening
+
+- Add a CDN/Object storage for media if you need persistence beyond Render's ephemeral disk.
+- Add rate limiting & helmet middleware for security.
+- Move secrets to a managed secret store in production.
+
+---
+
+With these steps the project should deploy with zero config errors.
+
 ## AI Chatbot (Gemini + local knowledge)
 
 The app includes a Gemini-powered chatbot, grounded by your local college FAQs. You control the knowledge; Gemini answers in natural language.

@@ -10,7 +10,8 @@ const getAllExamsController = async (req, res) => {
     if (semester) query.semester = semester;
     if (examType) query.examType = examType;
 
-    const exams = await Exam.find(query);
+    const exams = await Exam.find(query)
+    ;
 
     if (!exams || exams.length === 0) {
       return ApiResponse.error("No Exams Found", 404).send(res);

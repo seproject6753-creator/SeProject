@@ -11,20 +11,22 @@ const USER_TYPES = {
 };
 
 const UserTypeSelector = ({ selected, onSelect }) => (
-  <div className="flex justify-center gap-4 mb-8">
-    {Object.values(USER_TYPES).map((type) => (
-      <button
-        key={type}
-        onClick={() => onSelect(type)}
-        className={`px-5 py-2 text-sm font-medium rounded-full transition duration-200 ${
-          selected === type
-            ? "bg-blue-600 text-white shadow"
-            : "bg-gray-100 text-gray-800 hover:bg-gray-200"
-        }`}
-      >
-        {type}
-      </button>
-    ))}
+  <div className="w-full mb-8">
+    <div className="flex bg-slate-800/70 border border-slate-700 rounded-xl p-1">
+      {Object.values(USER_TYPES).map((type) => (
+        <button
+          key={type}
+          onClick={() => onSelect(type)}
+          className={`flex-1 px-4 py-2 text-sm font-medium rounded-lg transition duration-200 ${
+            selected === type
+              ? "bg-[linear-gradient(90deg,#00D1B2,#7C4DFF)] text-white shadow"
+              : "text-slate-300 hover:text-white"
+          }`}
+        >
+          {type}
+        </button>
+      ))}
+    </div>
   </div>
 );
 
@@ -77,35 +79,31 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-tr from-gray-100 via-white to-gray-100 flex items-center justify-center px-4">
-      <div className="w-full max-w-[40%] px-6 py-12">
-        <h1 className="text-4xl font-bold text-gray-800 text-center mb-6">
-          {selected} Forget Password
-        </h1>
+    <div className="min-h-screen w-full bg-gradient-to-b from-[#071028] via-[#07162a] to-[#071028] text-white flex items-center justify-center px-4">
+      <div className="w-full max-w-md px-2 sm:px-6 py-12">
+        <h1 className="text-3xl sm:text-4xl font-bold text-center mb-6">{selected} Forget Password</h1>
         <UserTypeSelector selected={selected} onSelect={setSelected} />
         <form
-          className="w-full p-8 bg-white rounded-2xl shadow-xl border border-gray-200"
+          className="w-full p-8 bg-slate-900/60 backdrop-blur rounded-2xl shadow-2xl border border-slate-700"
           onSubmit={onSubmit}
         >
           <div className="mb-6">
-            <label
-              className="block text-gray-800 text-sm font-medium mb-2"
-              htmlFor="email"
-            >
+            <label className="block text-slate-200 text-sm font-medium mb-2" htmlFor="email">
               {selected} Email
             </label>
             <input
               type="email"
               id="email"
+              placeholder="e.g., 500027@gmail.com"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
               required
-              className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 text-sm bg-slate-800/70 text-slate-100 placeholder-slate-400 border border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C4DFF] glass-input"
             />
           </div>
           <CustomButton
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200"
+            className="w-full text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-lg hover:-translate-y-0.5 bg-[linear-gradient(90deg,#00D1B2,#7C4DFF)]"
           >
             Send Reset Link
           </CustomButton>

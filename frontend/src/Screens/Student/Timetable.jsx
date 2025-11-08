@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FiDownload } from "react-icons/fi";
 import Heading from "../../components/Heading";
@@ -6,6 +5,7 @@ import { useSelector } from "react-redux";
 import axiosWrapper from "../../utils/AxiosWrapper";
 import { toast } from "react-hot-toast";
 import Loading from "../../components/Loading";
+
 const Timetable = () => {
   const [timetable, setTimetable] = useState("");
   const userData = useSelector((state) => state.userData);
@@ -29,65 +29,72 @@ const Timetable = () => {
           setTimetable("");
         }
       } catch (error) {
-        if (error && error.response && error.response.status === 404) {
+        if (error?.response?.status === 404) {
           setTimetable("");
           return;
         }
-        toast.error(
-          error.response?.data?.message || "Error fetching timetable"
-        );
+        toast.error(error.response?.data?.message || "Error fetching timetable");
         console.error(error);
       } finally {
         setDataLoading(false);
       }
     };
     userData && getTimetable();
-  }, [userData, userData.branchId, userData.semester]);
+  }, [userData, userData?.branchId, userData?.semester]);
+
+  const mediaBase = process.env.REACT_APP_MEDIA_LINK;
 
   return (
-    <div className="w-full mx-auto mt-10 flex justify-center items-start flex-col mb-10">
-      <div className="flex justify-between items-center w-full">
-        <Heading title={`Timetable of Semester ${userData.semester}`} />
+    <div className="max-w-7xl mx-auto p-4 lg:p-8 text-white">
+      {/* Header / Actions */}
+      <div className="rounded-2xl p-6 border border-white/5 shadow-xl flex flex-col md:flex-row md:items-center md:justify-between gap-4" style={{backgroundImage:"linear-gradient(90deg, rgba(0,209,178,0.15), rgba(124,77,255,0.10))"}}>
+        <Heading title={`Semester ${userData.semester} Timetable`} />
         {!dataLoading && timetable && (
-          <p
-            className="flex justify-center items-center text-lg font-medium cursor-pointer hover:text-red-500 hover:scale-110 ease-linear transition-all duration-200 hover:duration-200 hover:ease-linear hover:transition-all"
-            onClick={() =>
-              window.open(process.env.REACT_APP_MEDIA_LINK + "/" + timetable)
-            }
+          <button
+            className="flex items-center gap-2 bg-slate-900/40 hover:bg-slate-900/60 border border-white/10 px-4 py-2 rounded-lg text-sm font-medium transition"
+            onClick={() => window.open(`${mediaBase}/${timetable}`)}
           >
-            Download
-            <span className="ml-2">
-              <FiDownload />
-            </span>
-          </p>
+            <FiDownload /> Download
+          </button>
         )}
       </div>
-      {dataLoading && <Loading />}
-      {!dataLoading && timetable && (
-        timetable.toLowerCase().endsWith(".pdf") ? (
-          <div className="mt-8 w-full flex justify-center">
-            <object
-              data={`${process.env.REACT_APP_MEDIA_LINK + "/" + timetable}#toolbar=1`}
-              type="application/pdf"
-              width="70%"
-              height="700px"
-            >
-              <p>
-                Your browser can't display this PDF. You can download it instead.
-              </p>
-            </object>
+
+      {/* Content */}
+      <div className="mt-8 min-h-[300px]">
+        {dataLoading && (
+          <div className="rounded-2xl p-10 border border-white/5 bg-slate-900/40 backdrop-blur flex items-center justify-center">
+            <Loading />
           </div>
-        ) : (
-          <img
-            className="mt-8 rounded-lg shadow-md w-[70%] mx-auto"
-            src={process.env.REACT_APP_MEDIA_LINK + "/" + timetable}
-            alt="timetable"
-          />
-        )
-      )}
-      {!dataLoading && !timetable && (
-        <p className="mt-10">No Timetable Available At The Moment!</p>
-      )}
+        )}
+
+        {!dataLoading && timetable && (
+          <div className="rounded-2xl p-4 border border-white/5 bg-slate-900/60 backdrop-blur shadow-xl flex justify-center">
+            {timetable.toLowerCase().endsWith(".pdf") ? (
+              <object
+                data={`${mediaBase}/${timetable}#toolbar=1`}
+                type="application/pdf"
+                className="w-full h-[70vh] rounded-lg"
+              >
+                <p className="text-slate-300 p-4">
+                  Your browser can't display this PDF. You can download it instead.
+                </p>
+              </object>
+            ) : (
+              <img
+                className="rounded-lg max-w-full h-auto"
+                src={`${mediaBase}/${timetable}`}
+                alt="timetable"
+              />
+            )}
+          </div>
+        )}
+
+        {!dataLoading && !timetable && (
+          <div className="rounded-2xl p-10 border border-white/5 bg-slate-900/40 backdrop-blur text-center text-slate-300">
+            No Timetable Available At The Moment!
+          </div>
+        )}
+      </div>
     </div>
   );
 };

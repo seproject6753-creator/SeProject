@@ -162,7 +162,7 @@ const Notice = () => {
       {!dataLoading && (
         <div className="mt-8">
           {notices.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-slate-400">
               No notices found
             </div>
           ) : (
@@ -170,21 +170,21 @@ const Notice = () => {
               {notices?.map((notice) => (
                 <div
                   key={notice._id}
-                  className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-100 w-[350px]"
+                  className="bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-xl shadow-sm hover:shadow-md hover:border-teal-300/30 transition-all duration-300 overflow-hidden w-[350px] group"
                 >
                   <div className="p-6">
                     <div className="flex justify-between items-start mb-4">
                       <h3
-                        className={`text-lg font-semibold line-clamp-2 group flex items-start ${
+                        className={`text-lg font-semibold line-clamp-2 flex items-start bg-gradient-to-r from-teal-400 via-fuchsia-400 to-indigo-400 bg-clip-text text-transparent ${
                           notice.link
-                            ? "cursor-pointer hover:text-blue-600"
+                            ? "cursor-pointer hover:opacity-80"
                             : ""
                         }`}
                         onClick={() => notice.link && window.open(notice.link)}
                       >
                         {notice.title}
                         {notice.link && (
-                          <IoMdLink className="ml-2 flex-shrink-0 text-xl opacity-70 group-hover:opacity-100 group-hover:text-blue-500" />
+                          <IoMdLink className="ml-2 flex-shrink-0 text-xl opacity-70 group-hover:opacity-100 text-teal-300" />
                         )}
                       </h3>
                       {(router.pathname === "/faculty" ||
@@ -213,11 +213,11 @@ const Notice = () => {
                       )}
                     </div>
 
-                    <p className="text-gray-600 text-sm line-clamp-3 mb-4">
+                    <p className="text-slate-300 text-sm line-clamp-3 mb-4">
                       {notice.description}
                     </p>
 
-                    <div className="flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center justify-between text-xs text-slate-400">
                       <div className="flex items-center">
                         <HiOutlineCalendar className="mr-1" />
                         {new Date(notice.createdAt).toLocaleString("en-GB", {
@@ -227,7 +227,7 @@ const Notice = () => {
                         })}
                       </div>
                       {notice.type !== "both" && (
-                        <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-medium">
+                        <span className="bg-teal-500/20 text-teal-300 px-3 py-1 rounded-full font-medium">
                           {notice.type === "student" ? "Student" : "Faculty"}
                         </span>
                       )}
@@ -242,10 +242,10 @@ const Notice = () => {
 
       {/* Modal UI */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg w-[500px] max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center p-6 border-b">
-              <h2 className="text-xl font-semibold">
+        <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
+          <div className="bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-xl w-[500px] max-h-[90vh] overflow-y-auto text-slate-100">
+            <div className="flex justify-between items-center p-6 border-b border-white/10">
+              <h2 className="text-xl font-semibold bg-gradient-to-r from-teal-400 via-fuchsia-400 to-indigo-400 bg-clip-text text-transparent">
                 {editingNotice ? "Edit Notice" : "Add New Notice"}
               </h2>
               <button
@@ -253,7 +253,7 @@ const Notice = () => {
                   setShowAddModal(false);
                   setEditingNotice(null);
                 }}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-slate-400 hover:text-white"
               >
                 <IoMdClose className="text-3xl" />
               </button>
@@ -261,7 +261,7 @@ const Notice = () => {
 
             <form onSubmit={handleSubmitNotice} className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-300 mb-2">
                   Notice Title
                 </label>
                 <input
@@ -270,12 +270,12 @@ const Notice = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, title: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100 placeholder-slate-400"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-300 mb-2">
                   Notice Description
                 </label>
                 <textarea
@@ -284,12 +284,12 @@ const Notice = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, description: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100 placeholder-slate-400"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-300 mb-2">
                   Notice Link (Optional)
                 </label>
                 <input
@@ -298,12 +298,12 @@ const Notice = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, link: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100 placeholder-slate-400"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-300 mb-2">
                   Type Of Notice
                 </label>
                 <select
@@ -311,7 +311,7 @@ const Notice = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, type: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                 >
                   <option value="">Select Type</option>
                   <option value="student">Student</option>
@@ -320,7 +320,7 @@ const Notice = () => {
                 </select>
               </div>
 
-              <div className="flex justify-end gap-4 pt-4 border-t">
+              <div className="flex justify-end gap-4 pt-4 border-t border-white/10">
                 <CustomButton
                   variant="secondary"
                   onClick={() => {

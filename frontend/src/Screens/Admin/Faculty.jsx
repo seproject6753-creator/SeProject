@@ -286,15 +286,15 @@ const Faculty = () => {
       {dataLoading && <Loading />}
 
       {showAddForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-8 w-[90%] max-w-4xl max-h-[90vh] overflow-y-auto relative">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-slate-900/80 border border-white/10 rounded-xl p-8 w-[90%] max-w-4xl max-h-[90vh] overflow-y-auto relative text-slate-100 shadow-xl">
             <button
               onClick={resetForm}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition-colors"
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-full hover:bg-white/10 transition-colors"
             >
               <IoMdClose className="text-2xl" />
             </button>
-            <h2 className="text-2xl font-semibold mb-6">
+            <h2 className="text-2xl font-semibold mb-6 bg-gradient-to-r from-teal-400 via-fuchsia-400 to-indigo-400 bg-clip-text text-transparent">
               {isEditing ? "Edit Faculty" : "Add New Faculty"}
             </h2>
             <form
@@ -305,19 +305,19 @@ const Faculty = () => {
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Profile Photo
                   </label>
                   <input
                     type="file"
                     onChange={(e) => setFile(e.target.files[0])}
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     accept="image/*"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     First Name
                   </label>
                   <input
@@ -326,13 +326,13 @@ const Faculty = () => {
                     onChange={(e) =>
                       handleInputChange("firstName", e.target.value)
                     }
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Last Name
                   </label>
                   <input
@@ -341,39 +341,39 @@ const Faculty = () => {
                     onChange={(e) =>
                       handleInputChange("lastName", e.target.value)
                     }
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Email
                   </label>
                   <input
                     type="email"
                     value={data.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Phone
                   </label>
                   <input
                     type="tel"
                     value={data.phone}
                     onChange={(e) => handleInputChange("phone", e.target.value)}
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Gender
                   </label>
                   <select
@@ -381,7 +381,7 @@ const Faculty = () => {
                     onChange={(e) =>
                       handleInputChange("gender", e.target.value)
                     }
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   >
                     <option value="">Select Gender</option>
@@ -392,20 +392,20 @@ const Faculty = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Date of Birth
                   </label>
                   <input
                     type="date"
                     value={data.dob}
                     onChange={(e) => handleInputChange("dob", e.target.value)}
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Blood Group
                   </label>
                   <select
@@ -413,7 +413,7 @@ const Faculty = () => {
                     onChange={(e) =>
                       handleInputChange("bloodGroup", e.target.value)
                     }
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   >
                     <option value="">Select Blood Group</option>
@@ -429,7 +429,7 @@ const Faculty = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Designation
                   </label>
                   <input
@@ -438,13 +438,13 @@ const Faculty = () => {
                     onChange={(e) =>
                       handleInputChange("designation", e.target.value)
                     }
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Joining Date
                   </label>
                   <input
@@ -453,13 +453,13 @@ const Faculty = () => {
                     onChange={(e) =>
                       handleInputChange("joiningDate", e.target.value)
                     }
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Salary
                   </label>
                   <input
@@ -468,13 +468,13 @@ const Faculty = () => {
                     onChange={(e) =>
                       handleInputChange("salary", e.target.value)
                     }
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Branch
                   </label>
                   <select
@@ -482,7 +482,7 @@ const Faculty = () => {
                     onChange={(e) =>
                       handleInputChange("branchId", e.target.value)
                     }
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   >
                     <option value="">Select Branch</option>
@@ -495,7 +495,7 @@ const Faculty = () => {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Address
                   </label>
                   <input
@@ -504,39 +504,39 @@ const Faculty = () => {
                     onChange={(e) =>
                       handleInputChange("address", e.target.value)
                     }
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     City
                   </label>
                   <input
                     type="text"
                     value={data.city}
                     onChange={(e) => handleInputChange("city", e.target.value)}
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     State
                   </label>
                   <input
                     type="text"
                     value={data.state}
                     onChange={(e) => handleInputChange("state", e.target.value)}
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Pincode
                   </label>
                   <input
@@ -545,13 +545,13 @@ const Faculty = () => {
                     onChange={(e) =>
                       handleInputChange("pincode", e.target.value)
                     }
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-slate-300 mb-1">
                     Country
                   </label>
                   <input
@@ -560,18 +560,18 @@ const Faculty = () => {
                     onChange={(e) =>
                       handleInputChange("country", e.target.value)
                     }
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                     required
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <h3 className="text-lg font-semibold mb-4">
+                  <h3 className="text-lg font-semibold mb-4 text-slate-200">
                     Emergency Contact
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-slate-300 mb-1">
                         Name
                       </label>
                       <input
@@ -580,13 +580,13 @@ const Faculty = () => {
                         onChange={(e) =>
                           handleEmergencyContactChange("name", e.target.value)
                         }
-                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                         required
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-slate-300 mb-1">
                         Relationship
                       </label>
                       <input
@@ -598,13 +598,13 @@ const Faculty = () => {
                             e.target.value
                           )
                         }
-                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                         required
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-slate-300 mb-1">
                         Phone
                       </label>
                       <input
@@ -613,7 +613,7 @@ const Faculty = () => {
                         onChange={(e) =>
                           handleEmergencyContactChange("phone", e.target.value)
                         }
-                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-100"
                         required
                       />
                     </div>
@@ -623,7 +623,7 @@ const Faculty = () => {
 
               <div className="mt-8 flex justify-between items-center gap-4">
                 <div>
-                  <p className="text-sm">
+                  <p className="text-sm text-slate-300">
                     Default password will be{" "}
                     <span className="font-bold">faculty123</span>
                   </p>
@@ -648,9 +648,9 @@ const Faculty = () => {
 
       {!dataLoading && !showAddForm && (
         <div className="mt-8 w-full">
-          <table className="text-sm min-w-full bg-white">
+          <table className="text-sm min-w-full bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden text-slate-200">
             <thead>
-              <tr className="bg-blue-500 text-white">
+              <tr className="bg-slate-800/60 text-slate-200 border-b border-white/10">
                 <th className="py-4 px-6 text-left font-semibold">Name</th>
                 <th className="py-4 px-6 text-left font-semibold">Email</th>
                 <th className="py-4 px-6 text-left font-semibold">Phone</th>
@@ -666,7 +666,7 @@ const Faculty = () => {
             <tbody>
               {faculty && faculty.length > 0 ? (
                 faculty.map((item, index) => (
-                  <tr key={index} className="border-b hover:bg-blue-50">
+                  <tr key={index} className="border-b border-white/10 hover:bg-white/5">
                     <td className="py-4 px-6">{`${item.firstName} ${item.lastName}`}</td>
                     <td className="py-4 px-6">{item.email}</td>
                     <td className="py-4 px-6">{item.phone}</td>
@@ -692,7 +692,7 @@ const Faculty = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6" className="text-center text-base pt-10">
+                  <td colSpan="6" className="text-center text-base pt-10 text-slate-400">
                     No Faculty found.
                   </td>
                 </tr>

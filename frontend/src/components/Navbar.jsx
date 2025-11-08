@@ -10,7 +10,7 @@ const Navbar = () => {
   const logouthandler = () => {
     sessionStorage.removeItem("userToken");
     sessionStorage.removeItem("userType");
-    navigate("/");
+    navigate("/login", { replace: true });
   };
 
   return (

@@ -20,6 +20,9 @@ const auth = async (req, res, next) => {
       }
 
       req.userId = decoded.userId;
+      // Propagate optional role flags if encoded by different login flows
+      if (decoded.role) req.userRole = decoded.role;
+      if (decoded.isSuperAdmin) req.isSuperAdmin = decoded.isSuperAdmin;
       req.token = token;
       next();
     } catch (jwtError) {

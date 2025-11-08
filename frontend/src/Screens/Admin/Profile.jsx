@@ -4,7 +4,7 @@ import CustomButton from "../../components/CustomButton";
 
 const Profile = ({ profileData }) => {
   const [showUpdatePasswordModal, setShowUpdatePasswordModal] = useState(false);
-  if (!profileData) return null;
+  if (!profileData) return <div className="p-6 text-slate-400">No profile data.</div>;
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -15,168 +15,82 @@ const Profile = ({ profileData }) => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-8">
-      {/* Header Section */}
-      <div className="flex items-center justify-between gap-8 mb-12 border-b pb-8">
-        <div className="flex items-center gap-8">
+    <div className="max-w-7xl mx-auto p-4 lg:p-8 text-white">
+      {/* Header */}
+      <div className="rounded-2xl p-6 border border-white/5 shadow-xl mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6" style={{backgroundImage:"linear-gradient(90deg, rgba(0,209,178,0.12), rgba(124,77,255,0.08))"}}>
+        <div className="flex items-center gap-5">
           <img
             src={`${process.env.REACT_APP_MEDIA_LINK}/${profileData.profile}`}
             alt="Profile"
-            className="w-40 h-40 rounded-full object-cover ring-4 ring-blue-500 ring-offset-4"
+            className="w-24 h-24 rounded-full object-cover ring-4 ring-[#00D1B2]/50"
           />
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              {`${profileData.firstName} ${profileData.lastName}`}
-            </h1>
-            <p className="text-lg text-gray-600 mb-1">
-              Employee ID: {profileData.employeeId}
-            </p>
-            <p className="text-lg text-blue-600 font-medium">
-              {profileData.designation}
-              {profileData.isSuperAdmin && " (Super Admin)"}
-            </p>
+            <h1 className="text-2xl md:text-3xl font-extrabold">{profileData.firstName} {profileData.lastName}</h1>
+            <p className="text-slate-300 text-sm md:text-base">Employee ID: {profileData.employeeId}</p>
+            <p className="text-slate-300 text-sm md:text-base">{profileData.designation}{profileData.isSuperAdmin && " (Super Admin)"}</p>
           </div>
         </div>
-        <CustomButton onClick={() => setShowUpdatePasswordModal(true)}>
+        <CustomButton
+          onClick={() => setShowUpdatePasswordModal(true)}
+          className="bg-[linear-gradient(90deg,#00D1B2,#7C4DFF)] text-white px-5 py-2.5 rounded-lg font-semibold"
+        >
           Update Password
         </CustomButton>
         {showUpdatePasswordModal && (
-          <UpdatePasswordLoggedIn
-            onClose={() => setShowUpdatePasswordModal(false)}
-          />
+          <div className="mt-4 w-full md:w-auto">
+            <UpdatePasswordLoggedIn onClose={() => setShowUpdatePasswordModal(false)} />
+          </div>
         )}
       </div>
 
-      <div className="grid grid-cols-1 gap-12">
+      <div className="grid grid-cols-1 gap-8">
         {/* Personal Information */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">
-            Personal Information
-          </h2>
+        <div className="rounded-xl p-6 border border-white/5 bg-slate-900/50 backdrop-blur">
+          <h2 className="text-xl font-bold mb-4">Personal Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div>
-              <label className="text-sm font-medium text-gray-500">Email</label>
-              <p className="text-gray-900">{profileData.email}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">Phone</label>
-              <p className="text-gray-900">{profileData.phone}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Gender
-              </label>
-              <p className="text-gray-900 capitalize">{profileData.gender}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Blood Group
-              </label>
-              <p className="text-gray-900">{profileData.bloodGroup}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Date of Birth
-              </label>
-              <p className="text-gray-900">{formatDate(profileData.dob)}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Joining Date
-              </label>
-              <p className="text-gray-900">
-                {formatDate(profileData.joiningDate)}
-              </p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Salary
-              </label>
-              <p className="text-gray-900">
-                ₹{profileData.salary.toLocaleString()}
-              </p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Status
-              </label>
-              <p className="text-gray-900 capitalize">{profileData.status}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">Role</label>
-              <p className="text-gray-900 capitalize">
-                {profileData.isSuperAdmin ? "Super Admin" : "Admin"}
-              </p>
-            </div>
+            <Info label="Email" value={profileData.email} />
+            <Info label="Phone" value={profileData.phone} />
+            <Info label="Gender" value={profileData.gender} />
+            <Info label="Blood Group" value={profileData.bloodGroup} />
+            <Info label="Date of Birth" value={formatDate(profileData.dob)} />
+            <Info label="Joining Date" value={formatDate(profileData.joiningDate)} />
+            <Info label="Salary" value={`₹${profileData.salary?.toLocaleString()}`} />
+            <Info label="Status" value={profileData.status} />
+            <Info label="Role" value={profileData.isSuperAdmin ? "Super Admin" : "Admin"} />
           </div>
         </div>
 
         {/* Address Information */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">
-            Address Information
-          </h2>
+        <div className="rounded-xl p-6 border border-white/5 bg-slate-900/50 backdrop-blur">
+          <h2 className="text-xl font-bold mb-4">Address Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Address
-              </label>
-              <p className="text-gray-900">{profileData.address}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">City</label>
-              <p className="text-gray-900">{profileData.city}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">State</label>
-              <p className="text-gray-900">{profileData.state}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Pincode
-              </label>
-              <p className="text-gray-900">{profileData.pincode}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Country
-              </label>
-              <p className="text-gray-900">{profileData.country}</p>
-            </div>
+            <Info label="Address" value={profileData.address} className="md:col-span-2" />
+            <Info label="City" value={profileData.city} />
+            <Info label="State" value={profileData.state} />
+            <Info label="Pincode" value={profileData.pincode} />
+            <Info label="Country" value={profileData.country} />
           </div>
         </div>
 
         {/* Emergency Contact */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">
-            Emergency Contact
-          </h2>
+        <div className="rounded-xl p-6 border border-white/5 bg-slate-900/50 backdrop-blur">
+          <h2 className="text-xl font-bold mb-4">Emergency Contact</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div>
-              <label className="text-sm font-medium text-gray-500">Name</label>
-              <p className="text-gray-900">
-                {profileData.emergencyContact.name}
-              </p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">
-                Relationship
-              </label>
-              <p className="text-gray-900">
-                {profileData.emergencyContact.relationship}
-              </p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-500">Phone</label>
-              <p className="text-gray-900">
-                {profileData.emergencyContact.phone}
-              </p>
-            </div>
+            <Info label="Name" value={profileData.emergencyContact?.name} />
+            <Info label="Relationship" value={profileData.emergencyContact?.relationship} />
+            <Info label="Phone" value={profileData.emergencyContact?.phone} />
           </div>
         </div>
       </div>
     </div>
   );
 };
+
+const Info = ({ label, value, className = "" }) => (
+  <div className={className}>
+    <p className="text-slate-400 text-xs uppercase tracking-wide">{label}</p>
+    <p className="mt-1 font-medium">{value}</p>
+  </div>
+);
 
 export default Profile;

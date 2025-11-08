@@ -50,8 +50,6 @@ const Chatbot = () => {
   };
 
   const clearChat = () => {
-    // Optional: confirm to avoid accidental clears
-    // if (!window.confirm("Clear chat?")) return;
     setMessages(initialMessages);
   };
 
@@ -60,7 +58,8 @@ const Chatbot = () => {
       {/* Floating toggle button */}
       <button
         onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-6 right-6 z-40 rounded-full bg-blue-600 text-white px-4 py-3 shadow-lg hover:bg-blue-700 focus:outline-none"
+        className="fixed bottom-6 right-6 z-50 rounded-full px-4 py-3 shadow-lg focus:outline-none text-white transition-all"
+        style={{ backgroundImage: "linear-gradient(90deg,#00D1B2,#7C4DFF)" }}
         aria-label={open ? "Close chatbot" : "Open chatbot"}
       >
         {open ? "Close Chat" : "Chatbot"}
@@ -68,40 +67,45 @@ const Chatbot = () => {
 
       {/* Chat window */}
       {open && (
-        <div className="fixed bottom-24 right-6 z-40 w-80 sm:w-96 bg-white border border-gray-200 rounded-xl shadow-2xl flex flex-col overflow-hidden">
-          <div className="bg-blue-600 text-white px-3 py-2 flex items-center justify-between">
+        <div className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl flex flex-col overflow-hidden text-slate-100">
+          <div className="px-3 py-2 flex items-center justify-between border-b border-white/10" style={{ backgroundImage: "linear-gradient(90deg,rgba(0,209,178,0.2),rgba(124,77,255,0.2))" }}>
             <div className="font-semibold">College Assistant</div>
             <div className="flex items-center gap-2">
               <button
                 onClick={clearChat}
-                className="text-xs bg-white/20 hover:bg-white/30 text-white px-2 py-1 rounded"
+                className="text-xs bg-white/10 hover:bg-white/20 text-white px-2 py-1 rounded"
                 title="Clear chat"
               >
                 Clear
               </button>
             </div>
           </div>
-          <div ref={scrollRef} className="p-3 space-y-3 h-80 overflow-y-auto bg-gray-50">
+          <div ref={scrollRef} className="p-3 space-y-3 h-80 overflow-y-auto bg-transparent">
             {messages.map((m, idx) => (
               <div key={idx} className={`whitespace-pre-wrap text-sm ${m.role === "user" ? "text-right" : "text-left"}`}>
-                <div className={`inline-block px-3 py-2 rounded-lg max-w-[85%] ${
-                  m.role === "user" ? "bg-blue-600 text-white" : "bg-white border border-gray-200 text-gray-800"
-                }`}>
+                <div
+                  className={`inline-block px-3 py-2 rounded-lg max-w-[85%] ${
+                    m.role === "user"
+                      ? "text-white"
+                      : "bg-slate-800/60 border border-white/10 text-slate-200"
+                  }`}
+                  style={m.role === "user" ? { backgroundImage: "linear-gradient(90deg,#00D1B2,#7C4DFF)" } : {}}
+                >
                   {m.text}
                 </div>
               </div>
             ))}
             {loading && (
               <div className="text-left text-sm">
-                <div className="inline-block px-3 py-2 rounded-lg bg-white border border-gray-200 text-gray-500">
+                <div className="inline-block px-3 py-2 rounded-lg bg-slate-800/60 border border-white/10 text-slate-300">
                   Thinking...
                 </div>
               </div>
             )}
           </div>
-          <div className="p-2 border-t border-gray-200 flex items-center gap-2">
+          <div className="p-2 border-t border-white/10 flex items-center gap-2 bg-slate-900/60">
             <textarea
-              className="flex-1 resize-none rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="flex-1 resize-none rounded-md bg-slate-800/60 border border-white/10 p-2 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
               rows={2}
               placeholder="Ask about timings, exams, societies... (Gemini)"
               value={input}
@@ -111,7 +115,8 @@ const Chatbot = () => {
             <button
               onClick={send}
               disabled={loading}
-              className="bg-blue-600 text-white px-3 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50"
+              className="px-3 py-2 rounded-md text-white disabled:opacity-50"
+              style={{ backgroundImage: "linear-gradient(90deg,#00D1B2,#7C4DFF)" }}
             >
               Send
             </button>

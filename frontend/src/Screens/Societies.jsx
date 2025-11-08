@@ -4,41 +4,41 @@ import { Toaster, toast } from "react-hot-toast";
 import CustomButton from "../components/CustomButton";
 
 const SectionTitle = ({ children }) => (
-  <h3 className="text-lg font-semibold mt-6 mb-2">{children}</h3>
+  <h3 className="text-lg font-semibold mt-6 mb-2 text-slate-100">{children}</h3>
 );
 
 const SocietyCard = ({ s, onSelect }) => (
   <div
-    className="border rounded p-4 hover:shadow cursor-pointer bg-white"
+    className="rounded-xl p-4 cursor-pointer bg-slate-800/60 backdrop-blur border border-white/10 hover:border-white/20 transition shadow-sm hover:shadow-md"
     onClick={() => onSelect(s)}
   >
-    <div className="text-sm uppercase text-gray-500">{s.category}</div>
-    <div className="text-xl font-semibold">{s.name}</div>
-    <div className="text-gray-600 mt-1 line-clamp-2">{s.about}</div>
+    <div className="text-[11px] tracking-wide uppercase text-teal-300/80">{s.category}</div>
+    <div className="text-xl font-semibold text-white">{s.name}</div>
+    <div className="text-slate-300 mt-1 line-clamp-2">{s.about}</div>
   </div>
 );
 
 const PeopleList = ({ title, items, actions }) => (
-  <div className="mt-3">
-    <div className="font-medium mb-2">{title}</div>
-    <div className="grid grid-cols-1 gap-2">
+  <div className="mt-4">
+    <div className="font-medium mb-2 text-slate-200">{title}</div>
+    <div className="grid grid-cols-1 gap-3">
       {items.map((m) => (
-        <div key={`${m._id}`} className="border rounded p-3 flex items-center gap-3 bg-white w-full">
+        <div key={`${m._id}`} className="rounded-xl p-3 flex items-center gap-3 bg-slate-800/60 backdrop-blur border border-white/10 w-full">
           {m.profile ? (
             <img src={m.profile} alt={m.name} className="w-10 h-10 rounded-full object-cover" />
           ) : (
-            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700">
-              {m.name?.charAt(0)}
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-400 to-indigo-500 text-white flex items-center justify-center font-semibold">
+              {(m.name||"").trim().slice(0,2).toUpperCase()}
             </div>
           )}
           <div className="flex-1 min-w-0">
-            <div className="font-medium">{m.name}</div>
-            <div className="text-xs text-gray-500">{m.email}</div>
+            <div className="font-medium text-slate-100 truncate">{m.name}</div>
+            <div className="text-xs text-slate-400 truncate">{m.email}</div>
           </div>
           {actions && <div className="ml-auto flex gap-2 shrink-0">{actions(m)}</div>}
         </div>
       ))}
-      {items.length === 0 && <div className="text-gray-500 text-sm">No one yet</div>}
+      {items.length === 0 && <div className="text-slate-400 text-sm">No one yet</div>}
     </div>
   </div>
 );
@@ -182,13 +182,13 @@ const Societies = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto mb-10">
+    <div className="max-w-6xl mx-auto mb-10 px-3 md:px-0">
       <Toaster position="bottom-center" />
       {!selected ? (
         <div>
-          <h2 className="text-2xl font-bold mb-4">Societies</h2>
+          <h2 className="text-2xl font-bold mb-4 text-white">Societies</h2>
           {listLoading ? (
-            <div className="flex justify-center items-center h-40 text-gray-600">Loading societies...</div>
+            <div className="flex justify-center items-center h-40 text-slate-400">Loading societies...</div>
           ) : (
           <>
           <SectionTitle>Cultural</SectionTitle>
@@ -209,15 +209,15 @@ const Societies = () => {
       ) : (
         <div>
           {detailLoading && (
-            <div className="mb-3 text-sm text-blue-700 bg-blue-50 border border-blue-100 p-2 rounded">Fetching details...</div>
+            <div className="mb-3 text-sm text-teal-300 bg-slate-800/60 border border-white/10 p-2 rounded">Fetching details...</div>
           )}
           <div className="flex items-center gap-3 mb-4">
-            <CustomButton onClick={() => setSelected(null)}>Back</CustomButton>
-            <h2 className="text-2xl font-bold">{selected.name}</h2>
-            <span className="px-2 py-1 text-xs rounded bg-gray-100 text-gray-700 uppercase">{selected.category}</span>
+            <CustomButton onClick={() => setSelected(null)} className="bg-gradient-to-r from-teal-500 to-indigo-500 hover:from-teal-400 hover:to-indigo-600">Back</CustomButton>
+            <h2 className="text-2xl font-bold text-white">{selected.name}</h2>
+            <span className="px-2 py-1 text-xs rounded bg-slate-800/60 border border-white/10 text-slate-200 uppercase">{selected.category}</span>
             {!members.myRole && (
               <button
-                className="ml-auto text-xs px-3 py-1 border rounded"
+                className="ml-auto text-xs px-3 py-1 border rounded bg-slate-800/60 border-white/10 text-slate-200 hover:border-white/20"
                 onClick={async()=>{
                   try {
                     const resp = await axiosWrapper.post(`/societies/${selected._id}/become-head`, {}, { headers: { Authorization: `Bearer ${token}` } });
@@ -229,15 +229,15 @@ const Societies = () => {
             )}
           </div>
           {selected.about && (
-            <div className="bg-white border rounded p-4 mb-4">
-              <h3 className="font-semibold mb-2">About</h3>
-              <p className="text-gray-700 whitespace-pre-line">{selected.about}</p>
+            <div className="bg-slate-900/50 backdrop-blur border border-white/10 rounded-xl p-4 mb-4">
+              <h3 className="font-semibold mb-2 text-white">About</h3>
+              <p className="text-slate-300 whitespace-pre-line">{selected.about}</p>
             </div>
           )}
           {selected.activities?.length > 0 && (
-            <div className="bg-white border rounded p-4 mb-4">
-              <h3 className="font-semibold mb-2">What we do</h3>
-              <ul className="list-disc pl-5 text-gray-700">
+            <div className="bg-slate-900/50 backdrop-blur border border-white/10 rounded-xl p-4 mb-4">
+              <h3 className="font-semibold mb-2 text-white">What we do</h3>
+              <ul className="list-disc pl-5 text-slate-300">
                 {selected.activities.map((a, idx) => (
                   <li key={idx}>{a}</li>
                 ))}
@@ -246,45 +246,45 @@ const Societies = () => {
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white border rounded p-4">
-              <h3 className="font-semibold mb-2">Team</h3>
+            <div className="bg-slate-900/50 backdrop-blur border border-white/10 rounded-xl p-4">
+              <h3 className="font-semibold mb-2 text-white">Team</h3>
               <PeopleList title="Heads" items={members.heads} actions={(m)=> (
                 members.myRole === "head" && (members.heads?.length || 0) > 1 ? (
                   <>
-                    <button className="text-xs px-2 py-1 border rounded" onClick={()=>changeRole(m._id, "coordinator")}>Demote</button>
-                    <button className="text-xs px-2 py-1 border rounded" onClick={()=>removeMember(m._id)}>Remove</button>
+                    <button className="text-xs px-2 py-1 border rounded bg-slate-800/60 border-white/10 text-slate-200" onClick={()=>changeRole(m._id, "coordinator")}>Demote</button>
+                    <button className="text-xs px-2 py-1 border rounded bg-slate-800/60 border-white/10 text-slate-200" onClick={()=>removeMember(m._id)}>Remove</button>
                   </>
                 ) : null
               )} />
               <PeopleList title="Coordinators" items={members.coordinators} actions={(m)=> (
                 members.myRole === "head" ? (
                   <>
-                    <button className="text-xs px-2 py-1 border rounded" onClick={()=>changeRole(m._id, "head")}>Promote</button>
-                    <button className="text-xs px-2 py-1 border rounded" onClick={()=>changeRole(m._id, "member")}>Demote</button>
-                    <button className="text-xs px-2 py-1 border rounded" onClick={()=>removeMember(m._id)}>Remove</button>
+                    <button className="text-xs px-2 py-1 border rounded bg-slate-800/60 border-white/10 text-slate-200" onClick={()=>changeRole(m._id, "head")}>Promote</button>
+                    <button className="text-xs px-2 py-1 border rounded bg-slate-800/60 border-white/10 text-slate-200" onClick={()=>changeRole(m._id, "member")}>Demote</button>
+                    <button className="text-xs px-2 py-1 border rounded bg-slate-800/60 border-white/10 text-slate-200" onClick={()=>removeMember(m._id)}>Remove</button>
                   </>
                 ) : null
               )} />
               <PeopleList title="Members" items={members.members} actions={(m)=> (
                 members.myRole === "head" ? (
                   <>
-                    <button className="text-xs px-2 py-1 border rounded" onClick={()=>changeRole(m._id, "coordinator")}>Promote</button>
-                    <button className="text-xs px-2 py-1 border rounded" onClick={()=>removeMember(m._id)}>Remove</button>
+                    <button className="text-xs px-2 py-1 border rounded bg-slate-800/60 border-white/10 text-slate-200" onClick={()=>changeRole(m._id, "coordinator")}>Promote</button>
+                    <button className="text-xs px-2 py-1 border rounded bg-slate-800/60 border-white/10 text-slate-200" onClick={()=>removeMember(m._id)}>Remove</button>
                   </>
                 ) : null
               )} />
               {members.myRole === "head" && (
-                <div className="mt-4 border-t pt-4">
-                  <div className="font-semibold mb-2">Manage Members</div>
+                <div className="mt-4 border-t border-white/10 pt-4">
+                  <div className="font-semibold mb-2 text-white">Manage Members</div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
                     <input
-                      className="border rounded px-3 py-2"
+                      className="rounded px-3 py-2 bg-slate-800/60 border border-white/10 text-slate-100 placeholder-slate-400"
                       placeholder="User ID"
                       value={manageForm.userId}
                       onChange={(e) => setManageForm({ ...manageForm, userId: e.target.value })}
                     />
                     <select
-                      className="border rounded px-3 py-2"
+                      className="rounded px-3 py-2 bg-slate-800/60 border border-white/10 text-slate-100"
                       value={manageForm.role}
                       onChange={(e) => setManageForm({ ...manageForm, role: e.target.value })}
                     >
@@ -293,6 +293,7 @@ const Societies = () => {
                       <option value="head">Head</option>
                     </select>
                     <CustomButton
+                      className="bg-gradient-to-r from-teal-500 to-indigo-500 hover:from-teal-400 hover:to-indigo-600"
                       onClick={async () => {
                         try {
                           const resp = await axiosWrapper.post(
@@ -315,10 +316,10 @@ const Societies = () => {
                     </CustomButton>
                   </div>
                   <div className="mt-4">
-                    <div className="font-medium mb-2">Search users</div>
+                    <div className="font-medium mb-2 text-slate-200">Search users</div>
                     <div className="flex gap-2 mb-2">
-                      <input className="border rounded px-3 py-2 flex-1" placeholder="Search by name, email, enrollment/employee id" value={searchQ} onChange={(e)=>setSearchQ(e.target.value)} />
-                      <CustomButton onClick={async ()=>{
+                      <input className="rounded px-3 py-2 flex-1 bg-slate-800/60 border border-white/10 text-slate-100 placeholder-slate-400" placeholder="Search by name, email, enrollment/employee id" value={searchQ} onChange={(e)=>setSearchQ(e.target.value)} />
+                      <CustomButton className="bg-gradient-to-r from-teal-500 to-indigo-500 hover:from-teal-400 hover:to-indigo-600" onClick={async ()=>{
                         try {
                           const resp = await axiosWrapper.get(`/societies/search-users?q=${encodeURIComponent(searchQ)}`, { headers: { Authorization: `Bearer ${token}` } });
                           if (resp.data.success) setSearchResults(resp.data.data);
@@ -331,17 +332,17 @@ const Societies = () => {
                     {searchResults.length > 0 && (
                       <ul className="space-y-2 max-h-60 overflow-auto">
                         {searchResults.map((u)=> (
-                          <li key={`${u.userType}-${u.userId}`} className="border rounded p-2 flex items-center justify-between">
+                          <li key={`${u.userType}-${u.userId}`} className="rounded-lg p-2 flex items-center justify-between bg-slate-800/60 border border-white/10">
                             <div className="flex items-center gap-3">
-                              {u.profile ? <img src={u.profile} alt={u.name} className="w-8 h-8 rounded-full object-cover"/> : <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700">{u.name?.charAt(0)}</div>}
+                              {u.profile ? <img src={u.profile} alt={u.name} className="w-8 h-8 rounded-full object-cover"/> : <div className="w-8 h-8 rounded-full bg-gradient-to-br from-teal-400 to-indigo-500 text-white flex items-center justify-center text-xs font-semibold">{(u.name||"").trim().slice(0,2).toUpperCase()}</div>}
                               <div>
-                                <div className="font-medium text-sm">{u.name}</div>
-                                <div className="text-xs text-gray-500">{u.email}</div>
+                                <div className="font-medium text-sm text-slate-100">{u.name}</div>
+                                <div className="text-xs text-slate-400">{u.email}</div>
                               </div>
                             </div>
                             <div className="flex gap-2">
                               {(["member","coordinator","head"]).map((r)=> (
-                                <button key={r} className="text-xs px-2 py-1 border rounded" onClick={async()=>{
+                                <button key={r} className="text-xs px-2 py-1 border rounded bg-slate-800/60 border-white/10 text-slate-200" onClick={async()=>{
                                   try {
                                     const resp = await axiosWrapper.post(`/societies/${selected._id}/members`, { userId: u.userId, role: r }, { headers: { Authorization: `Bearer ${token}` } });
                                     if (resp.data.success) { toast.success(`Added as ${r}`); await loadSociety(selected); }
@@ -360,20 +361,26 @@ const Societies = () => {
                 </div>
               )}
             </div>
-            <div className="bg-white border rounded p-4">
-              <h3 className="font-semibold mb-2">Upcoming Events</h3>
-              {events.length === 0 && <div className="text-gray-500 text-sm">No upcoming events</div>}
+            <div className="bg-slate-900/50 backdrop-blur border border-white/10 rounded-xl p-4">
+              <h3 className="font-semibold mb-2 text-white">Upcoming Events</h3>
+              {events.length === 0 && <div className="text-slate-400 text-sm">No upcoming events</div>}
               <ul className="space-y-3">
                 {events.map((ev) => (
-                  <li key={ev._id} className="border rounded p-3">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <div className="font-medium">{ev.title}</div>
-                        <div className="text-sm text-gray-600">{new Date(ev.date).toLocaleString()} • {ev.location}</div>
-                        {ev.description && <div className="text-gray-700 mt-1 whitespace-pre-line">{ev.description}</div>}
+                  <li key={ev._id} className="rounded-lg p-3 bg-slate-800/60 border border-white/10">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-3">
+                        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-teal-500 to-indigo-500 text-white flex flex-col items-center justify-center text-xs font-bold shrink-0">
+                          <div>{new Date(ev.date).getDate().toString().padStart(2, "0")}</div>
+                          <div className="uppercase text-[10px] tracking-wide">{new Date(ev.date).toLocaleString(undefined,{month:'short'})}</div>
+                        </div>
+                        <div>
+                          <div className="font-medium text-slate-100">{ev.title}</div>
+                          <div className="text-sm text-slate-400">{new Date(ev.date).toLocaleString()} • {ev.location}</div>
+                          {ev.description && <div className="text-slate-300 mt-1 whitespace-pre-line">{ev.description}</div>}
+                        </div>
                       </div>
                       {members.myRole === "head" && (
-                        <button className="text-xs px-2 py-1 border rounded" onClick={async()=>{
+                        <button className="text-xs px-2 py-1 border rounded bg-slate-800/60 border-white/10 text-slate-200" onClick={async()=>{
                           try { 
                             const resp = await axiosWrapper.patch(`/societies/${selected._id}/events/${ev._id}/cancel`, {}, { headers: { Authorization: `Bearer ${token}` } });
                             if (resp.data.success) { toast.success("Cancelled"); await loadSociety(selected); }
@@ -387,17 +394,17 @@ const Societies = () => {
               </ul>
 
               {(members.myRole === "coordinator" || members.myRole === "head") && (
-                <div className="mt-4 border-t pt-4">
-                  <div className="font-semibold mb-2">Schedule an event</div>
+                <div className="mt-4 border-t border-white/10 pt-4">
+                  <div className="font-semibold mb-2 text-white">Schedule an Event</div>
                   <div className="grid grid-cols-1 gap-2">
                     <input
-                      className="border rounded px-3 py-2"
+                      className="rounded px-3 py-2 bg-slate-800/60 border border-white/10 text-slate-100 placeholder-slate-400"
                       placeholder="Title"
                       value={eventForm.title}
                       onChange={(e) => setEventForm({ ...eventForm, title: e.target.value })}
                     />
                     <textarea
-                      className="border rounded px-3 py-2"
+                      className="rounded px-3 py-2 bg-slate-800/60 border border-white/10 text-slate-100 placeholder-slate-400"
                       placeholder="Description"
                       rows={3}
                       value={eventForm.description}
@@ -405,18 +412,18 @@ const Societies = () => {
                     />
                     <input
                       type="datetime-local"
-                      className="border rounded px-3 py-2"
+                      className="rounded px-3 py-2 bg-slate-800/60 border border-white/10 text-slate-100 placeholder-slate-400"
                       value={eventForm.date}
                       onChange={(e) => setEventForm({ ...eventForm, date: e.target.value })}
                     />
                     <input
-                      className="border rounded px-3 py-2"
+                      className="rounded px-3 py-2 bg-slate-800/60 border border-white/10 text-slate-100 placeholder-slate-400"
                       placeholder="Location"
                       value={eventForm.location}
                       onChange={(e) => setEventForm({ ...eventForm, location: e.target.value })}
                     />
                     <div className="flex justify-end">
-                      <CustomButton onClick={createEvent} disabled={creating}>
+                      <CustomButton onClick={createEvent} disabled={creating} className="bg-gradient-to-r from-teal-500 to-indigo-500 hover:from-teal-400 hover:to-indigo-600">
                         {creating ? "Creating..." : "Create Event"}
                       </CustomButton>
                     </div>
@@ -427,20 +434,20 @@ const Societies = () => {
           </div>
 
           {members.myRole === "head" && (
-            <div className="bg-white border rounded p-4 mt-4">
-              <h3 className="font-semibold mb-2">Edit Society Info</h3>
+            <div className="bg-slate-900/50 backdrop-blur border border-white/10 rounded-xl p-4 mt-4">
+              <h3 className="font-semibold mb-2 text-white">Edit Society Info</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
-                  <div className="text-sm text-gray-600 mb-1">About</div>
-                  <textarea className="border rounded px-3 py-2 w-full" rows={6} value={aboutEdit} onChange={(e)=>setAboutEdit(e.target.value)} />
+                  <div className="text-sm text-slate-400 mb-1">About</div>
+                  <textarea className="rounded px-3 py-2 w-full bg-slate-800/60 border border-white/10 text-slate-100" rows={6} value={aboutEdit} onChange={(e)=>setAboutEdit(e.target.value)} />
                 </div>
                 <div>
-                  <div className="text-sm text-gray-600 mb-1">Activities (one per line)</div>
-                  <textarea className="border rounded px-3 py-2 w-full" rows={6} value={activitiesEdit} onChange={(e)=>setActivitiesEdit(e.target.value)} />
+                  <div className="text-sm text-slate-400 mb-1">Activities (one per line)</div>
+                  <textarea className="rounded px-3 py-2 w-full bg-slate-800/60 border border-white/10 text-slate-100" rows={6} value={activitiesEdit} onChange={(e)=>setActivitiesEdit(e.target.value)} />
                 </div>
               </div>
               <div className="flex justify-end mt-3">
-                <CustomButton onClick={updateSociety}>Save</CustomButton>
+                <CustomButton onClick={updateSociety} className="bg-gradient-to-r from-teal-500 to-indigo-500 hover:from-teal-400 hover:to-indigo-600">Save</CustomButton>
               </div>
             </div>
           )}

@@ -51,15 +51,15 @@ const ViewMarks = () => {
   const endTermMarks = marks.filter((mark) => mark.examId.examType === "end");
 
   return (
-    <div className="w-full mx-auto mt-10 flex justify-center items-start flex-col mb-10">
+    <div className="w-full mx-auto mt-10 flex justify-center items-start flex-col mb-10 px-3 md:px-0">
       <div className="flex justify-between items-center w-full mb-6">
         <Heading title="View Marks" />
-        <div className="flex items-center gap-4">
-          <label className="text-sm font-medium text-gray-700">Semester:</label>
+        <div className="flex items-center gap-3 bg-slate-900/50 backdrop-blur border border-white/10 rounded-lg px-4 py-2">
+          <label className="text-xs font-semibold tracking-wide text-slate-300 uppercase">Semester</label>
           <select
             value={selectedSemester || ""}
             onChange={handleSemesterChange}
-            className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-3 py-2 rounded-md bg-slate-800/60 border border-white/10 text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
           >
             {[1, 2, 3, 4, 5, 6, 7, 8].map((sem) => (
               <option key={sem} value={sem}>
@@ -69,79 +69,59 @@ const ViewMarks = () => {
           </select>
         </div>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4">Mid Term Marks</h2>
+        <div className="rounded-xl p-6 bg-slate-900/50 backdrop-blur border border-white/10">
+          <h2 className="text-lg font-semibold mb-4 text-white">Mid Term Marks</h2>
           {dataLoading ? (
-            <p className="text-gray-500">Loading...</p>
+            <p className="text-slate-400">Loading...</p>
           ) : midTermMarks.length > 0 ? (
             <div className="space-y-4">
               {midTermMarks.map((mark) => (
-                <div
-                  key={mark._id}
-                  className="border rounded-lg p-4 hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex justify-between items-center">
+                <div key={mark._id} className="rounded-lg p-4 bg-slate-800/60 border border-white/10 hover:border-white/20 transition">
+                  <div className="flex justify-between items-start gap-4">
                     <div>
-                      <p className="font-medium text-gray-800">
-                        {mark.subjectId.name}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {mark.examId.name}
-                      </p>
+                      <p className="font-medium text-slate-100">{mark.subjectId.name}</p>
+                      <p className="text-xs text-slate-400">{mark.examId.name}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-lg font-semibold text-blue-600">
+                      <p className="text-xl font-bold bg-gradient-to-r from-teal-400 to-indigo-500 text-transparent bg-clip-text">
                         {mark.marksObtained}
                       </p>
-                      <p className="text-sm text-gray-500">
-                        out of {mark.examId.totalMarks}
-                      </p>
+                      <p className="text-xs text-slate-400">out of {mark.examId.totalMarks}</p>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-gray-500">No mid term marks available</p>
+            <p className="text-slate-400">No mid term marks available</p>
           )}
         </div>
-
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4">End Term Marks</h2>
+        <div className="rounded-xl p-6 bg-slate-900/50 backdrop-blur border border-white/10">
+          <h2 className="text-lg font-semibold mb-4 text-white">End Term Marks</h2>
           {dataLoading ? (
-            <p className="text-gray-500">Loading...</p>
+            <p className="text-slate-400">Loading...</p>
           ) : endTermMarks.length > 0 ? (
             <div className="space-y-4">
               {endTermMarks.map((mark) => (
-                <div
-                  key={mark._id}
-                  className="border rounded-lg p-4 hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex justify-between items-center">
+                <div key={mark._id} className="rounded-lg p-4 bg-slate-800/60 border border-white/10 hover:border-white/20 transition">
+                  <div className="flex justify-between items-start gap-4">
                     <div>
-                      <p className="font-medium text-gray-800">
-                        {mark.subjectId.name}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {mark.examId.name}
-                      </p>
+                      <p className="font-medium text-slate-100">{mark.subjectId.name}</p>
+                      <p className="text-xs text-slate-400">{mark.examId.name}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-lg font-semibold text-blue-600">
+                      <p className="text-xl font-bold bg-gradient-to-r from-teal-400 to-indigo-500 text-transparent bg-clip-text">
                         {mark.marksObtained}
                       </p>
-                      <p className="text-sm text-gray-500">
-                        out of {mark.examId.totalMarks}
-                      </p>
+                      <p className="text-xs text-slate-400">out of {mark.examId.totalMarks}</p>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-gray-500">No end term marks available</p>
+            <p className="text-slate-400">No end term marks available</p>
           )}
         </div>
       </div>

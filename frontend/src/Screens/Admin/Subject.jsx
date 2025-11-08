@@ -200,7 +200,7 @@ const Subject = () => {
           </CustomButton>
         )}
       </div>
-      {dataLoading && <Loading />}
+  {dataLoading && <Loading />}
 
       {!dataLoading && branch.length == 0 && (
         <div className="flex justify-center items-center flex-col w-full mt-24">
@@ -214,13 +214,13 @@ const Subject = () => {
       {!dataLoading && branch.length > 0 && (
         <div className="mt-8 w-full">
           {subject.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-slate-400">
               No subjects found
             </div>
           ) : (
-            <table className="text-sm min-w-full bg-white">
+            <table className="text-sm min-w-full bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden text-slate-200">
               <thead>
-                <tr className="bg-blue-500 text-white">
+                <tr className="bg-slate-800/60 text-slate-200 border-b border-white/10">
                   <th className="py-4 px-6 text-left font-semibold">Name</th>
                   <th className="py-4 px-6 text-left font-semibold">Code</th>
                   <th className="py-4 px-6 text-left font-semibold">Branch</th>
@@ -236,7 +236,7 @@ const Subject = () => {
               <tbody>
                 {subject &&
                   subject.map((item, index) => (
-                    <tr key={index} className="border-b hover:bg-blue-50">
+                    <tr key={index} className="border-b border-white/10 hover:bg-white/5">
                       <td className="py-4 px-6">{item.name}</td>
                       <td className="py-4 px-6">{item.code}</td>
                       <td className="py-4 px-6">{item.branch?.name}</td>
@@ -268,8 +268,8 @@ const Subject = () => {
 
       {/* Add/Edit Subject Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg p-6 max-w-2xl w-full">
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4">
+          <div className="bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-xl p-6 max-w-2xl w-full text-slate-100">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">
                 {isEditing ? "Edit Subject" : "Add New Subject"}
@@ -281,39 +281,39 @@ const Subject = () => {
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-300 mb-1">
                   Subject Name
                 </label>
                 <input
                   type="text"
                   value={data.name}
                   onChange={(e) => setData({ ...data, name: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-300 mb-1">
                   Subject Code
                 </label>
                 <input
                   type="text"
                   value={data.code}
                   onChange={(e) => setData({ ...data, code: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-300 mb-1">
                   Branch
                 </label>
                 <select
                   value={data.branch}
                   onChange={(e) => setData({ ...data, branch: e.target.value })}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent"
                   required
                 >
                   <option value="">Select Branch</option>
@@ -326,7 +326,7 @@ const Subject = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-300 mb-1">
                   Semester
                 </label>
                 <select
@@ -334,7 +334,7 @@ const Subject = () => {
                   onChange={(e) =>
                     setData({ ...data, semester: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent"
                   required
                 >
                   <option value="">Select Semester</option>
@@ -347,7 +347,7 @@ const Subject = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-slate-300 mb-1">
                   Credits
                 </label>
                 <input
@@ -356,7 +356,7 @@ const Subject = () => {
                   onChange={(e) =>
                     setData({ ...data, credits: e.target.value })
                   }
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-slate-800/60 border border-white/10 rounded-md text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent"
                   required
                 />
               </div>

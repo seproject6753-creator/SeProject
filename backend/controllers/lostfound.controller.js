@@ -58,8 +58,13 @@ const claimItem = async (req, res) => {
     const item = await LostFound.findById(id);
     if (!item) return ApiResponse.notFound("Item not found").send(res);
 
+    // Allow uploader or any admin (isSuperAdmin flag) to mark claimed
     if (String(item.uploaderId) !== String(req.userId)) {
-      return ApiResponse.forbidden("Only the uploader can mark claimed").send(res);
+      // Check admin privilege injected earlier in middleware
+      const isAdmin = req.userRole === 'admin' || req.isSuperAdmin === true;
+      if (!isAdmin) {
+        return ApiResponse.forbidden("Only the uploader or admin can mark claimed").send(res);
+      }
     }
 
     if (item.status === "claimed") {
@@ -86,8 +91,12 @@ const deleteItem = async (req, res) => {
     const { id } = req.params;
     const item = await LostFound.findById(id);
     if (!item) return ApiResponse.notFound("Item not found").send(res);
+    // Allow uploader or admin to delete
     if (String(item.uploaderId) !== String(req.userId)) {
-      return ApiResponse.forbidden("Only the uploader can delete this item").send(res);
+      const isAdmin = req.userRole === 'admin' || req.isSuperAdmin === true;
+      if (!isAdmin) {
+        return ApiResponse.forbidden("Only the uploader or admin can delete this item").send(res);
+      }
     }
     await LostFound.findByIdAndDelete(id);
     return ApiResponse.success(null, "Item deleted").send(res);

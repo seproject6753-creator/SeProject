@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import axiosWrapper from "../utils/AxiosWrapper";
@@ -24,6 +24,8 @@ const LostFound = () => {
   });
   const [showForm, setShowForm] = useState(false);
 
+  const userType = sessionStorage.getItem("userType");
+  const isAdmin = userType === "Admin";
   const isUploader = (item) => userData && String(item.uploaderId) === String(userData._id);
 
   const fetchItems = async () => {
@@ -131,153 +133,232 @@ const LostFound = () => {
   };
 
   return (
-    <div className="w-full mx-auto mt-10 flex flex-col mb-10">
-      <div className="flex justify-between items-center w-full">
-        <Heading title="Lost & Found" />
-        <div>
-          <CustomButton onClick={() => setShowForm((v) => !v)}>
-            {showForm ? "Close" : "Report"}
-          </CustomButton>
-        </div>
+    <div className="w-full mx-auto px-6 lg:px-10 py-8 flex flex-col">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-3xl font-bold">Lost & Found</h1>
+        <button
+          onClick={() => setShowForm((v) => !v)}
+          className="flex items-center px-5 py-2.5 text-white font-semibold rounded-lg shadow-glow-lg transition-transform hover:-translate-y-1 bg-[linear-gradient(90deg,#00D1B2,#7C4DFF)]"
+        >
+          {showForm ? 'Close' : 'Report an Item'}
+        </button>
       </div>
 
-      {/* Post form (hidden by default) */}
+      {/* Report Form */}
       {showForm && (
-        <div className="bg-white mt-6 p-4 rounded shadow">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="backdrop-blur bg-[#0f2133]/60 border border-white/5 rounded-xl p-6 mb-8">
+          <h2 className="text-2xl font-semibold mb-6">Report a New Item</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm mb-1">Type</label>
-              <select value={form.type} onChange={(e)=>setForm({...form, type:e.target.value})} className="w-full border rounded px-3 py-2">
-                <option value="lost">Lost</option>
-                <option value="found">Found</option>
+              <label className="text-xs text-slate-400 uppercase">Type</label>
+              <select
+                value={form.type}
+                onChange={(e) => setForm({ ...form, type: e.target.value })}
+                className="w-full mt-2 px-4 py-3 rounded-xl bg-slate-900/40 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-[#7C4DFF]"
+              >
+                <option value="lost" className="bg-[#071028]">Lost</option>
+                <option value="found" className="bg-[#071028]">Found</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm mb-1">Title</label>
-              <input value={form.title} onChange={(e)=>setForm({...form, title:e.target.value})} className="w-full border rounded px-3 py-2" />
+              <label className="text-xs text-slate-400 uppercase">Title</label>
+              <input
+                value={form.title}
+                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                placeholder="e.g., Black Wallet"
+                className="w-full mt-2 px-4 py-3 rounded-xl bg-slate-900/40 border border-white/10 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C4DFF]"
+              />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm mb-1">Description</label>
-              <textarea value={form.description} onChange={(e)=>setForm({...form, description:e.target.value})} className="w-full border rounded px-3 py-2" rows={2} />
+              <label className="text-xs text-slate-400 uppercase">Description</label>
+              <textarea
+                rows={3}
+                value={form.description}
+                onChange={(e) => setForm({ ...form, description: e.target.value })}
+                placeholder="Describe the item..."
+                className="w-full mt-2 px-4 py-3 rounded-xl bg-slate-900/40 border border-white/10 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C4DFF]"
+              />
             </div>
             <div>
-              <label className="block text-sm mb-1">Contact Name</label>
-              <input value={form.contactName} onChange={(e)=>setForm({...form, contactName:e.target.value})} className="w-full border rounded px-3 py-2" />
+              <label className="text-xs text-slate-400 uppercase">Contact Name</label>
+              <input
+                value={form.contactName}
+                onChange={(e) => setForm({ ...form, contactName: e.target.value })}
+                placeholder="Your Name"
+                className="w-full mt-2 px-4 py-3 rounded-xl bg-slate-900/40 border border-white/10 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C4DFF]"
+              />
             </div>
             <div>
-              <label className="block text-sm mb-1">Contact Phone</label>
-              <input value={form.contactPhone} onChange={(e)=>setForm({...form, contactPhone:e.target.value})} className="w-full border rounded px-3 py-2" />
+              <label className="text-xs text-slate-400 uppercase">Contact Phone</label>
+              <input
+                value={form.contactPhone}
+                onChange={(e) => setForm({ ...form, contactPhone: e.target.value })}
+                placeholder="Your Phone"
+                className="w-full mt-2 px-4 py-3 rounded-xl bg-slate-900/40 border border-white/10 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C4DFF]"
+              />
             </div>
             <div>
-              <label className="block text-sm mb-1">Contact Email</label>
-              <input value={form.contactEmail} onChange={(e)=>setForm({...form, contactEmail:e.target.value})} className="w-full border rounded px-3 py-2" />
+              <label className="text-xs text-slate-400 uppercase">Contact Email</label>
+              <input
+                type="email"
+                value={form.contactEmail}
+                onChange={(e) => setForm({ ...form, contactEmail: e.target.value })}
+                placeholder="Your Email"
+                className="w-full mt-2 px-4 py-3 rounded-xl bg-slate-900/40 border border-white/10 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C4DFF]"
+              />
             </div>
             <div>
-              <label className="block text-sm mb-1">Location</label>
-              <input value={form.location} onChange={(e)=>setForm({...form, location:e.target.value})} className="w-full border rounded px-3 py-2" />
+              <label className="text-xs text-slate-400 uppercase">Location</label>
+              <input
+                value={form.location}
+                onChange={(e) => setForm({ ...form, location: e.target.value })}
+                placeholder="e.g., C-Block, Room 303"
+                className="w-full mt-2 px-4 py-3 rounded-xl bg-slate-900/40 border border-white/10 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7C4DFF]"
+              />
             </div>
-            <div>
-              <label className="block text-sm mb-1">Photo</label>
-              <input type="file" accept="image/*" onChange={(e)=>setForm({...form, photo:e.target.files[0]})} />
+            <div className="md:col-span-2">
+              <label className="text-xs text-slate-400 uppercase">Photo</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setForm({ ...form, photo: e.target.files[0] })}
+                className="w-full mt-2 px-4 py-3 rounded-xl bg-slate-900/40 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-[#7C4DFF]"
+              />
             </div>
           </div>
-          <div className="flex justify-end mt-4 gap-2">
-            <CustomButton variant="secondary" onClick={()=>setShowForm(false)}>Cancel</CustomButton>
-            <CustomButton onClick={onSubmit}>Post</CustomButton>
+          <div className="flex justify-end mt-6 gap-4">
+            <button
+              type="button"
+              onClick={() => setShowForm(false)}
+              className="px-5 py-2.5 rounded-lg font-medium text-white bg-white/5 hover:bg-white/10 backdrop-blur transition"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={onSubmit}
+              className="px-5 py-2.5 rounded-lg font-semibold text-white shadow-glow-lg bg-[linear-gradient(90deg,#00D1B2,#7C4DFF)] hover:-translate-y-1 transition-transform"
+            >
+              Post Item
+            </button>
           </div>
         </div>
       )}
 
-      {/* Items lists */}
+      {/* Items Lists */}
       {loading ? (
-        <div className="mt-6">Loading...</div>
+        <div className="text-slate-300">Loading items...</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Lost Items */}
           <div>
-            <h2 className="text-lg font-semibold mb-3">Lost Items</h2>
-            {lostItems.length === 0 ? (
-              <p className="text-sm text-gray-500">No lost items yet.</p>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {lostItems.map((item) => (
+            <h2 className="text-2xl font-semibold mb-4">Lost Items</h2>
+            <div className="backdrop-blur bg-[#0f2133]/60 border border-white/5 rounded-xl p-6 space-y-4">
+              {lostItems.length === 0 ? (
+                <p className="text-center text-slate-400 py-4">No lost items reported yet.</p>
+              ) : (
+                lostItems.map((item) => (
                   <div
                     key={item._id}
-                    className={`p-4 rounded shadow ${
-                      item.status === 'claimed'
-                        ? 'bg-green-50 border border-green-200'
-                        : 'bg-white'
-                    }`}
+                    className="glass rounded-xl border border-white/5 p-4 flex gap-4 hover-outline"
                   >
                     {item.photo && (
-                      <img src={`${process.env.REACT_APP_MEDIA_LINK + "/" + item.photo}`} alt={item.title} className="w-full h-40 object-cover rounded" />
+                      <div className="w-24 h-24 p-2 bg-white rounded-lg flex-shrink-0">
+                        <img
+                          src={`${process.env.REACT_APP_MEDIA_LINK + '/' + item.photo}`}
+                          alt={item.title}
+                          className="w-full h-full object-cover rounded"
+                        />
+                      </div>
                     )}
-                    <h3 className="text-lg font-semibold mt-3">{item.title}</h3>
-                    <p className="text-sm text-gray-700 mt-1">{item.description}</p>
-                    <div className="text-xs text-gray-500 mt-2">
-                      <div>Status: {item.status}{item.expiresAt && item.status === 'claimed' ? ` • ${formatTimeLeft(item.expiresAt)}` : ''}</div>
-                      {item.location && <div>Location: {item.location}</div>}
+                    <div className="flex-1">
+                      <span className="text-xs text-slate-400">{item.status === 'claimed' ? 'Claimed' : 'Open'}{item.expiresAt && item.status === 'claimed' ? ` • ${formatTimeLeft(item.expiresAt)}` : ''}</span>
+                      <h3 className="text-xl font-bold text-white mt-1">{item.title}</h3>
+                      <p className="text-slate-300 text-sm mt-1">{item.description}</p>
+                      {item.location && <p className="text-xs text-slate-400 mt-2">Location: {item.location}</p>}
                       {(item.contactName || item.contactPhone || item.contactEmail) && (
-                        <div className="mt-1">
-                          Contact: {[item.contactName, item.contactPhone, item.contactEmail].filter(Boolean).join(" • ")}
-                        </div>
+                        <p className="text-xs text-slate-400">Contact: {[item.contactName, item.contactPhone, item.contactEmail].filter(Boolean).join(' • ')}</p>
                       )}
-                      <div>Posted on: {new Date(item.createdAt).toLocaleString()}</div>
-                    </div>
-                    <div className="flex gap-2 mt-3">
-                      {isUploader(item) && item.status === 'open' && (
-                        <CustomButton variant="secondary" onClick={() => markClaimed(item._id)}>Mark Claimed</CustomButton>
-                      )}
-                      {isUploader(item) && (
-                        <CustomButton variant="danger" onClick={() => removeItem(item._id)}>Delete</CustomButton>
-                      )}
+                      <p className="text-xs text-slate-500 mt-1">Posted on: {new Date(item.createdAt).toLocaleDateString()}</p>
+                      <div className="flex gap-2 mt-3">
+                        {(isUploader(item) || isAdmin) && item.status === 'open' && (
+                          <button
+                            onClick={() => markClaimed(item._id)}
+                            className="px-3 py-1.5 rounded-md text-xs font-medium bg-white/10 hover:bg-white/20 transition text-white"
+                          >
+                            Mark Claimed
+                          </button>
+                        )}
+                        {(isUploader(item) || isAdmin) && (
+                          <button
+                            onClick={() => removeItem(item._id)}
+                            className="px-3 py-1.5 rounded-md text-xs font-medium bg-red-600/80 hover:bg-red-600 transition text-white"
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
+                ))
+              )}
+            </div>
           </div>
+          {/* Found Items */}
           <div>
-            <h2 className="text-lg font-semibold mb-3">Found Items</h2>
-            {foundItems.length === 0 ? (
-              <p className="text-sm text-gray-500">No found items yet.</p>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {foundItems.map((item) => (
+            <h2 className="text-2xl font-semibold mb-4">Found Items</h2>
+            <div className="space-y-4">
+              {foundItems.length === 0 ? (
+                <div className="backdrop-blur bg-[#0f2133]/60 border border-white/5 rounded-xl p-6">
+                  <p className="text-center text-slate-400 py-4">No found items reported yet.</p>
+                </div>
+              ) : (
+                foundItems.map((item) => (
                   <div
                     key={item._id}
-                    className={`p-4 rounded shadow ${
-                      item.status === 'claimed'
-                        ? 'bg-green-50 border border-green-200'
-                        : 'bg-white'
-                    }`}
+                    className="glass hover-outline rounded-xl border border-teal-400/30 p-4 flex gap-4"
                   >
                     {item.photo && (
-                      <img src={`${process.env.REACT_APP_MEDIA_LINK + "/" + item.photo}`} alt={item.title} className="w-full h-40 object-cover rounded" />
+                      <div className="w-24 h-24 p-2 bg-white rounded-lg flex-shrink-0">
+                        <img
+                          src={`${process.env.REACT_APP_MEDIA_LINK + '/' + item.photo}`}
+                          alt={item.title}
+                          className="w-full h-full object-cover rounded"
+                        />
+                      </div>
                     )}
-                    <h3 className="text-lg font-semibold mt-3">{item.title}</h3>
-                    <p className="text-sm text-gray-700 mt-1">{item.description}</p>
-                    <div className="text-xs text-gray-500 mt-2">
-                      <div>Status: {item.status}{item.expiresAt && item.status === 'claimed' ? ` • ${formatTimeLeft(item.expiresAt)}` : ''}</div>
-                      {item.location && <div>Location: {item.location}</div>}
+                    <div className="flex-1">
+                      <span className="text-xs text-slate-400">{item.status === 'claimed' ? 'Claimed' : 'Open'}{item.expiresAt && item.status === 'claimed' ? ` • ${formatTimeLeft(item.expiresAt)}` : ''}</span>
+                      <h3 className="text-xl font-bold text-white mt-1">{item.title}</h3>
+                      <p className="text-slate-300 text-sm mt-1">{item.description}</p>
+                      {item.location && <p className="text-xs text-slate-400 mt-2">Location: {item.location}</p>}
                       {(item.contactName || item.contactPhone || item.contactEmail) && (
-                        <div className="mt-1">
-                          Contact: {[item.contactName, item.contactPhone, item.contactEmail].filter(Boolean).join(" • ")}
-                        </div>
+                        <p className="text-xs text-slate-400">Contact: {[item.contactName, item.contactPhone, item.contactEmail].filter(Boolean).join(' • ')}</p>
                       )}
-                      <div>Posted on: {new Date(item.createdAt).toLocaleString()}</div>
-                    </div>
-                    <div className="flex gap-2 mt-3">
-                      {isUploader(item) && item.status === 'open' && (
-                        <CustomButton variant="secondary" onClick={() => markClaimed(item._id)}>Mark Claimed</CustomButton>
-                      )}
-                      {isUploader(item) && (
-                        <CustomButton variant="danger" onClick={() => removeItem(item._id)}>Delete</CustomButton>
-                      )}
+                      <p className="text-xs text-slate-500 mt-1">Posted on: {new Date(item.createdAt).toLocaleDateString()}</p>
+                      <div className="flex gap-2 mt-3">
+                        {(isUploader(item) || isAdmin) && item.status === 'open' && (
+                          <button
+                            onClick={() => markClaimed(item._id)}
+                            className="px-3 py-1.5 rounded-md text-xs font-medium bg-white/10 hover:bg-white/20 transition text-white"
+                          >
+                            Mark Claimed
+                          </button>
+                        )}
+                        {(isUploader(item) || isAdmin) && (
+                          <button
+                            onClick={() => removeItem(item._id)}
+                            className="px-3 py-1.5 rounded-md text-xs font-medium bg-red-600/80 hover:bg-red-600 transition text-white"
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
+                ))
+              )}
+            </div>
           </div>
         </div>
       )}

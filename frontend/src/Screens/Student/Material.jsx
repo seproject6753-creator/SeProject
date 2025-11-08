@@ -91,21 +91,19 @@ const Material = () => {
   };
 
   return (
-    <div className="w-full mx-auto mt-10 flex justify-center items-start flex-col mb-10">
-      <Heading title="Study Materials" />
+    <div className="w-full mx-auto mt-10 flex justify-center items-start flex-col mb-10 px-3 md:px-0">
+      <Heading title="Study Materials" className="text-white" />
 
       {!dataLoading && (
         <div className="w-full mt-4">
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-slate-900/50 backdrop-blur border border-white/10 rounded-xl p-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Filter by Subject
-              </label>
+              <label className="block text-xs font-semibold tracking-wide text-slate-300 mb-1 uppercase">Subject</label>
               <select
                 name="subject"
                 value={filters.subject}
                 onChange={handleFilterChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 rounded-md bg-slate-800/60 border border-white/10 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">All Subjects</option>
                 {subjects.map((subject) => (
@@ -117,14 +115,12 @@ const Material = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Filter by Type
-              </label>
+              <label className="block text-xs font-semibold tracking-wide text-slate-300 mb-1 uppercase">Type</label>
               <select
                 name="type"
                 value={filters.type}
                 onChange={handleFilterChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 rounded-md bg-slate-800/60 border border-white/10 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="">All Types</option>
                 <option value="notes">Notes</option>
@@ -141,22 +137,23 @@ const Material = () => {
 
       {!dataLoading && (
         <div className="w-full mt-8 overflow-x-auto">
-          <table className="text-sm min-w-full bg-white">
-            <thead>
-              <tr className="bg-blue-500 text-white">
-                <th className="py-4 px-6 text-left font-semibold">File</th>
-                <th className="py-4 px-6 text-left font-semibold">Title</th>
-                <th className="py-4 px-6 text-left font-semibold">Subject</th>
-                <th className="py-4 px-6 text-left font-semibold">Type</th>
+          <table className="text-sm min-w-full bg-slate-900/40 backdrop-blur border border-white/10 rounded-xl overflow-hidden">
+            <thead className="bg-gradient-to-r from-teal-600 to-indigo-600">
+              <tr className="text-white text-xs tracking-wide uppercase">
+                <th className="py-3 px-4 text-left font-semibold">File</th>
+                <th className="py-3 px-4 text-left font-semibold">Title</th>
+                <th className="py-3 px-4 text-left font-semibold">Subject</th>
+                <th className="py-3 px-4 text-left font-semibold">Type</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-white/5">
               {materials && materials.length > 0 ? (
                 materials.map((material) => (
-                  <tr key={material._id} className="border-b hover:bg-blue-50">
-                    <td className="py-4 px-6">
+                  <tr key={material._id} className="hover:bg-slate-800/60 transition">
+                    <td className="py-3 px-4">
                       <CustomButton
                         variant="primary"
+                        className="bg-gradient-to-r from-teal-500 to-indigo-500 hover:from-teal-400 hover:to-indigo-600 !p-2"
                         onClick={() => {
                           window.open(
                             `${process.env.REACT_APP_MEDIA_LINK}/${material.file}`
@@ -166,16 +163,14 @@ const Material = () => {
                         <MdLink className="text-xl" />
                       </CustomButton>
                     </td>
-                    <td className="py-4 px-6">{material.title}</td>
-                    <td className="py-4 px-6">{material.subject.name}</td>
-                    <td className="py-4 px-6 capitalize">{material.type}</td>
+                    <td className="py-3 px-4 text-slate-200">{material.title}</td>
+                    <td className="py-3 px-4 text-slate-300">{material.subject.name}</td>
+                    <td className="py-3 px-4 capitalize text-slate-400">{material.type}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4" className="text-center text-base pt-10">
-                    No materials found.
-                  </td>
+                  <td colSpan="4" className="text-center text-sm py-10 text-slate-400">No materials found.</td>
                 </tr>
               )}
             </tbody>

@@ -21,7 +21,8 @@ const loginAdminController = async (req, res, next) => {
       return ApiResponse.unauthorized("Invalid password").send(res);
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const tokenPayload = { userId: user._id, role: 'admin', isSuperAdmin: user.isSuperAdmin };
+    const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 

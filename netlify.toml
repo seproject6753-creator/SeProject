@@ -1,0 +1,16 @@
+## Netlify configuration for the React frontend inside the frontend/ folder
+
+[build]
+	base = "frontend"            # run all commands from the frontend folder
+	publish = "frontend/build"    # output directory after build
+	command = "npm ci && npm run build"
+
+[build.environment]
+	NODE_VERSION = "18"
+
+## Single Page App fallback so React Router works on refresh/deep links
+[[redirects]]
+	from = "/*"
+	to = "/index.html"
+	status = 200
+
